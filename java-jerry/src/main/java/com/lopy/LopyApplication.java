@@ -1,4 +1,4 @@
-package com.fyp.lopy;
+package com.lopy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

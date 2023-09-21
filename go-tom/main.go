@@ -35,7 +35,7 @@ func main() {
 	// printStarting()
 
 	app := initGinEngine()
-	_ = app.Run(":" + setting.Config.MustString("http.port", "8080"))
+	_ = app.Run(":" + setting.Config.MustString("http.port", "8081"))
 }
 
 func zapkitConf() *log.ZapkitConfig {

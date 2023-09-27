@@ -1,7 +1,7 @@
 package com.lopy.controller;
 
-import com.lopy.common.dto.RespDTO;
-import com.lopy.common.dto.auth.LoginForm;
+import com.lopy.common.dto.auth.LoginDTO;
+import com.lopy.common.vo.RespVO;
 import com.lopy.service.intf.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +19,20 @@ public class AuthController {
     private AuthService authServiceImpl;
 
     @PostMapping("/login/phone")
-    public RespDTO<String> phoneLogin(@RequestBody LoginForm loginForm) {
-        String token = authServiceImpl.phoneLogin(loginForm);
-        return new RespDTO<>(token);
+    public RespVO<String> phoneLogin(@RequestBody LoginDTO loginDTO) {
+        String token = authServiceImpl.phoneLogin(loginDTO);
+        return new RespVO<>(token);
     }
 
     @PostMapping("/login/google")
-    public RespDTO<String> googleLogin(@RequestBody LoginForm loginForm) {
-        String token = authServiceImpl.googleLogin(loginForm);
-        return new RespDTO<>(token);
+    public RespVO<String> googleLogin(@RequestBody LoginDTO loginDTO) {
+        String token = authServiceImpl.googleLogin(loginDTO);
+        return new RespVO<>(token);
     }
 
     @PostMapping("/login/apple")
-    public RespDTO<String> appleLogin(@RequestBody LoginForm loginForm) {
-        String token = authServiceImpl.appleLogin(loginForm);
-        return new RespDTO<>(token);
+    public RespVO<String> appleLogin(@RequestBody LoginDTO loginDTO) {
+        String token = authServiceImpl.appleLogin(loginDTO);
+        return new RespVO<>(token);
     }
 }

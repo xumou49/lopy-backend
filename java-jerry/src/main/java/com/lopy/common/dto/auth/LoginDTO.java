@@ -3,7 +3,7 @@ package com.lopy.common.dto.auth;
 import lombok.Data;
 
 @Data
-public class LoginForm {
+public class LoginDTO {
 
     /**
      * used for phone sign in

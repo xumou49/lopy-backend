@@ -1,4 +1,4 @@
-package com.lopy.common.dto;
+package com.lopy.common.vo;
 
 import com.lopy.common.constant.CommonConstant;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RespDTO<T> {
+public class RespVO<T> {
     private String message = CommonConstant.SUCCESS_MSG;
     private int code = 200;
     private T data;
 
-    public RespDTO(T data) {
+    public RespVO(T data) {
         this.data = data;
     }
 }

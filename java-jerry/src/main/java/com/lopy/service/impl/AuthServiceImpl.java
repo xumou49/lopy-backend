@@ -1,7 +1,7 @@
 package com.lopy.service.impl;
 
 import com.lopy.common.constant.CommonConstant;
-import com.lopy.common.dto.auth.LoginForm;
+import com.lopy.common.dto.auth.LoginDTO;
 import com.lopy.common.exception.ServiceException;
 import com.lopy.common.utils.JWTUtil;
 import com.lopy.common.utils.MessageUtil;
@@ -15,17 +15,17 @@ import java.util.Map;
 public class AuthServiceImpl implements AuthService {
 
     @Override
-    public String phoneLogin(LoginForm loginForm) {
+    public String phoneLogin(LoginDTO loginDTO) {
         return createJWT();
     }
 
     @Override
-    public String googleLogin(LoginForm loginForm) {
+    public String googleLogin(LoginDTO loginDTO) {
         return createJWT();
     }
 
     @Override
-    public String appleLogin(LoginForm loginForm) {
+    public String appleLogin(LoginDTO loginDTO) {
         return createJWT();
     }
 

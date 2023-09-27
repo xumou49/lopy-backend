@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.util.ParameterizedTypeImpl;
-import com.lopy.common.dto.RespDTO;
 import com.lopy.common.pagination.PageResult;
+import com.lopy.common.vo.RespVO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Type;
@@ -31,20 +31,20 @@ public class JsonUtil {
 
     public static <T> T fromJsonToRefType(String json, TypeReference<T> typeReference) { return JSON.parseObject(json, typeReference); }
 
-    public static <T> RespDTO<PageResult<T>> parseRespPageResult(String json, Class<T> clazz) {
+    public static <T> RespVO<PageResult<T>> parseRespPageResult(String json, Class<T> clazz) {
         ParameterizedTypeImpl inner = new ParameterizedTypeImpl(new Type[]{clazz}, null, PageResult.class);
-        ParameterizedTypeImpl outer = new ParameterizedTypeImpl(new Type[]{inner}, null, RespDTO.class);
+        ParameterizedTypeImpl outer = new ParameterizedTypeImpl(new Type[]{inner}, null, RespVO.class);
         return JSON.parseObject(json, outer);
     }
 
-    public static <T> RespDTO<List<T>> parseRespListResult(String json, Class<T> clazz) {
+    public static <T> RespVO<List<T>> parseRespListResult(String json, Class<T> clazz) {
         ParameterizedTypeImpl inner = new ParameterizedTypeImpl(new Type[]{clazz}, null, List.class);
-        ParameterizedTypeImpl outer = new ParameterizedTypeImpl(new Type[]{inner}, null, RespDTO.class);
+        ParameterizedTypeImpl outer = new ParameterizedTypeImpl(new Type[]{inner}, null, RespVO.class);
         return JSON.parseObject(json, outer);
     }
 
-    public static <T> RespDTO<T> parseRespObject(String json, Class<T> clazz) {
-        ParameterizedTypeImpl type = new ParameterizedTypeImpl(new Type[]{clazz}, null, RespDTO.class);
+    public static <T> RespVO<T> parseRespObject(String json, Class<T> clazz) {
+        ParameterizedTypeImpl type = new ParameterizedTypeImpl(new Type[]{clazz}, null, RespVO.class);
         return JSON.parseObject(json, type);
     }
 

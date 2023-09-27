@@ -1,10 +1,10 @@
 package com.lopy.service.intf;
 
-import com.lopy.common.dto.auth.LoginForm;
+import com.lopy.common.dto.auth.LoginDTO;
 
 public interface AuthService {
 
-    String phoneLogin(LoginForm loginForm);
-    String googleLogin(LoginForm loginForm);
-    String appleLogin(LoginForm loginForm);
+    String phoneLogin(LoginDTO loginDTO);
+    String googleLogin(LoginDTO loginDTO);
+    String appleLogin(LoginDTO loginDTO);
 }

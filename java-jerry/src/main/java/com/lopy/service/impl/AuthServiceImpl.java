@@ -1,8 +1,6 @@
 package com.lopy.service.impl;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
+import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.auth.LoginForm;
 import com.lopy.common.exception.ServiceException;
 import com.lopy.common.utils.JWTUtil;
@@ -32,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private String createJWT() {
-        Map<String, String> claims = Map.of("userId", "1", "userType", "admin");
+        Map<String, String> claims = Map.of("userId", "1", "userType", CommonConstant.Account.CUSTOMER);
         String token = JWTUtil.createToken(claims);
         if (StringUtil.isBlank(token)) {
             throw new ServiceException(MessageUtil.getMessage("error.token.create"));

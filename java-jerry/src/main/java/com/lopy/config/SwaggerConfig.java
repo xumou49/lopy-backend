@@ -60,6 +60,15 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi demoGroup() {
+        return GroupedOpenApi.builder()
+                .group("Demo API")
+                .addOpenApiCustomiser(this::addGlobalRequestHeaders)
+                .pathsToMatch("/api/v1/demo/**")
+                .build();
+    }
+
     private void addGlobalRequestHeaders(OpenAPI api) {
         List<Parameter> headers = buildHeaderParams();
         api.getPaths().values().forEach(o -> o.readOperations().forEach(ops -> headers.forEach(ops::addParametersItem)));

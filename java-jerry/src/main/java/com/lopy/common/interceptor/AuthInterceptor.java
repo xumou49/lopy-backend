@@ -45,11 +45,19 @@ public class AuthInterceptor implements HandlerInterceptor {
         // check if user is logged in
         String token = request.getHeader(AuthConstant.CURRENT_AUTH_TOKEN_HEADER);
         if (StringUtil.isBlank(token)) {
-            throw new PermissionDeniedException("");
+            // TODO
+            throw new PermissionDeniedException("error");
         }
 
         JWTPayload payload = JWTUtil.verifyToken(token);
         log.info("payload: {}", payload);
+        if (payload == null) {
+            // TODO
+            throw new PermissionDeniedException("error");
+        }
+
+        request.setAttribute(AuthConstant.CURRENT_USER_HEADER, payload.getUserId());
+        request.setAttribute(AuthConstant.CURRENT_USER_TYPE_HEADER, payload.getUserType());
         return true;
     }
 

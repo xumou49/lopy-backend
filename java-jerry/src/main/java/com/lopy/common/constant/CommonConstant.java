@@ -19,4 +19,13 @@ public class CommonConstant {
         public static final int METHOD_NOT_SUPPORT = 405;
         public static final int INTERNAL_SERVER_ERROR = 500;
     }
+
+    public static class Account {
+        private Account() {}
+
+        public static final String CUSTOMER = "customer";
+        public static final String RESTAURATEUR = "restaurateur";
+        public static final String ADMIN = "admin";
+    }
+
 }

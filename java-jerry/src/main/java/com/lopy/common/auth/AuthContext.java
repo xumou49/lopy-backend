@@ -25,8 +25,8 @@ public class AuthContext {
         return null;
     }
 
-    public static int getUserId() {
-        return DataUtil.toInteger(getRequestAttribute(AuthConstant.CURRENT_USER_HEADER));
+    public static Long getUserId() {
+        return DataUtil.toLong(getRequestAttribute(AuthConstant.CURRENT_USER_HEADER));
     }
 
     public static String getUserType() {

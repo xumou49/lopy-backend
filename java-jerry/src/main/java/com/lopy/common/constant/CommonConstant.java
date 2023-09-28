@@ -26,6 +26,17 @@ public class CommonConstant {
         public static final String CUSTOMER = "customer";
         public static final String RESTAURATEUR = "restaurateur";
         public static final String ADMIN = "admin";
+
+        public static final String LOCALE_ENGLISH = "en_US";
+        public static final String LOCALE_SIMPLIFIED_CHINESE = "zh_CN";
+
+        public static final int PLATFORM_APPLE = 1;
+        public static final int PLATFORM_GOOGLE = 2;
+        public static final int PLATFORM_LOPY = 3;
+
+        public static final int DEVICE_DEFAULT = 0;
+        public static final int DEVICE_IOS = 1;
+        public static final int DEVICE_ANDROID = 2;
     }
 
 }

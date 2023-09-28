@@ -1,4 +1,4 @@
-package com.lopy.service.intf;
+package com.lopy.service.biz.intf;
 
 import com.lopy.common.dto.auth.LoginDTO;
 

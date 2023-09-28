@@ -4,5 +4,5 @@ public class RedisConstant {
 
     private RedisConstant() {}
 
-    public static final String TOKEN_KEY = "app:token";
+    public static final String APPLE_WEB_KEYS = "apple:web-keys";
 }

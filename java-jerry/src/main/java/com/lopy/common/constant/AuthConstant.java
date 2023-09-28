@@ -12,5 +12,7 @@ public class AuthConstant {
 
     public static final String CURRENT_USER_LOCALE_HEADER = "lopy-user-locale";
 
+    public static final String CURRENT_USER_DEVICE_HEADER = "lopy-user-device";
+
     public static final String CURRENT_AUTH_TOKEN_HEADER = "lopy-token";
 }

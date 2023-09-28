@@ -13,5 +13,5 @@ public class LoginDTO {
     /**
      * used for apple / google sign in
      */
-    private String clientId;
+    private String token;
 }

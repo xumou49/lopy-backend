@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  # message
+  messages:
+    basename: "i18n/message"
+    encoding: "utf-8"
+
+  # mysql database
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: "jdbc:mysql://localhost:50000/lopy?characterEncoding=UTF-8&useSSL=false"
+    username: root
+    password: 123456
+
+  # redis
+  redis:
+    host: 127.0.0.1
+    port: 49999
+    database: 0
+
+# springdoc
+springdoc:
+  packages-to-scan: com.lopy.controller
+
+# mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: flag
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+apple:
+  issuer:
+    id: "https://appleid.apple.com"
+  auth-key:
+    url: "https://appleid.apple.com/auth/keys"
+
+google:
+  api:
+    domain: "https://www.googleapis.com"

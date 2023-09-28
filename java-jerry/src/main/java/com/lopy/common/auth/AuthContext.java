@@ -1,6 +1,7 @@
 package com.lopy.common.auth;
 
 import com.lopy.common.constant.AuthConstant;
+import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.utils.DataUtil;
 import com.lopy.common.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -44,5 +45,17 @@ public class AuthContext {
             return new Locale(args[0], args[1]);
         }
         return Locale.US;
+    }
+
+    public static Integer getUserDevice() {
+        String device = StringUtil.trim(getRequestAttribute(AuthConstant.CURRENT_USER_DEVICE_HEADER));
+        switch (device) {
+            case "iOS":
+                return CommonConstant.Account.DEVICE_IOS;
+            case "Android":
+                return CommonConstant.Account.DEVICE_ANDROID;
+            default:
+                return CommonConstant.Account.DEVICE_DEFAULT;
+        }
     }
 }

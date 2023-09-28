@@ -1,4 +1,4 @@
-package com.lopy.config;
+package com.lopy.config.swagger;
 
 import com.lopy.common.constant.AuthConstant;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;

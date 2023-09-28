@@ -2,7 +2,7 @@ package com.lopy.controller;
 
 import com.lopy.common.dto.auth.LoginDTO;
 import com.lopy.common.vo.RespVO;
-import com.lopy.service.intf.AuthService;
+import com.lopy.service.biz.intf.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

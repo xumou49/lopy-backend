@@ -110,7 +110,7 @@ public class AppleServiceImpl implements AppleService {
             KeyFactory kf = KeyFactory.getInstance(webKey.getKty());
             return kf.generatePublic(spec);
         } catch (Exception e) {
-            throw new ValidationException("");
+            throw new ServiceException("");
         }
     }
 

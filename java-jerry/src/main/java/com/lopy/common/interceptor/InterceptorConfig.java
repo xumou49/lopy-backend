@@ -15,6 +15,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Resource
     private AuthInterceptor authInterceptor;
 
+    @Resource
+    private LogInterceptor logInterceptor;
+
     /**
      * @description Register custom interceptor
      * @author Dex
@@ -24,11 +27,17 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/**")
-                // login API
+                // auth api
                 .excludePathPatterns("/api/v1/auth/**")
                 // favicon.ico
                 .excludePathPatterns("/favicon.ico")
-                // swagger API
+                // swagger api
+                .excludePathPatterns(getSwaggerUris());
+        registry.addInterceptor(logInterceptor)
+                .addPathPatterns("/**")
+                // favicon.ico
+                .excludePathPatterns("/favicon.ico")
+                // swagger api
                 .excludePathPatterns(getSwaggerUris());
     }
 

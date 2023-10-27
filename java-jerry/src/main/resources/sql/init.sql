@@ -1,6 +1,6 @@
-CREATE SCHEMA `lopy` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
+CREATE SCHEMA `lopy_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 
-USE `lopy`;
+USE `lopy_db`;
 
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (

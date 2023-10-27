@@ -10,7 +10,7 @@ import com.lopy.common.utils.JWTUtil;
 import com.lopy.common.utils.MessageUtil;
 import com.lopy.common.utils.StringUtil;
 import com.lopy.dao.UserDAO;
-import com.lopy.dao.entity.User;
+import com.lopy.entity.User;
 import com.lopy.service.biz.intf.AppleService;
 import com.lopy.service.biz.intf.AuthService;
 import com.lopy.service.google.GoogleService;

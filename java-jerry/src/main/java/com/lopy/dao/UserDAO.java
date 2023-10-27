@@ -1,7 +1,7 @@
 package com.lopy.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lopy.dao.entity.User;
+import com.lopy.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

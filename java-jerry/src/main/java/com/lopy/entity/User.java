@@ -1,4 +1,4 @@
-package com.lopy.dao.entity;
+package com.lopy.entity;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;

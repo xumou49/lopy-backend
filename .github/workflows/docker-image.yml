@@ -32,17 +32,11 @@ jobs:
           username: loopy2023888@gmail.com
           password: lopyDocker2023!
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          # images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          images: lopy2023/lopy-java-jerry-svc
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: java-jerry
           push: true
-          tags: latest
+          # tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          tags: lopy2023/lopy-java-jerry-svc:latest
 

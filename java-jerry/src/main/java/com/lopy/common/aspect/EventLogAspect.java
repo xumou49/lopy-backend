@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lopy.common.auth.AuthContext;
 import com.lopy.common.utils.WebUtil;
-import com.lopy.entity.EventLog;
+import com.lopy.dao.entity.EventLog;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

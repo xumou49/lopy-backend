@@ -1,4 +1,4 @@
-package com.lopy.entity;
+package com.lopy.dao.entity;
 
 import lombok.Data;
 

@@ -1,13 +1,10 @@
 package com.lopy.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lopy.entity.User;
+import com.lopy.dao.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Mapper
 public interface UserDAO extends BaseMapper<User> {

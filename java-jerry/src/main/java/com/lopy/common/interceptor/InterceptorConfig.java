@@ -28,7 +28,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/**")
                 // auth api
-                .excludePathPatterns("/api/v1/auth/**")
+                .excludePathPatterns("/api/v1/auth/**", "/api/v1/demo/**")
                 // favicon.ico
                 .excludePathPatterns("/favicon.ico")
                 // swagger api

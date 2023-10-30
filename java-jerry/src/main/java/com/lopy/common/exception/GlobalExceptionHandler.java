@@ -33,31 +33,31 @@ import java.util.Locale;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public RespVO<Object> handleException(MissingServletRequestParameterException e) {
+    public RespVO handleException(MissingServletRequestParameterException e) {
         log.warn("Missing Request Parameter", e);
         Locale locale = AuthContext.getUserLocale();
         return ResponseUtil.buildParamMiss(locale, e.getParameterName());
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public RespVO<Object> handleException(MethodArgumentTypeMismatchException e) {
+    public RespVO handleException(MethodArgumentTypeMismatchException e) {
         Locale locale = AuthContext.getUserLocale();
         return ResponseUtil.buildParamTypeError(locale, e.getName());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public RespVO<Object> handleException(MethodArgumentNotValidException e) {
+    public RespVO handleException(MethodArgumentNotValidException e) {
         BindingResult result = e.getBindingResult();
         return convertFieldError(result.getFieldErrors());
     }
 
     @ExceptionHandler(BindException.class)
-    public RespVO<Object> handleException(BindException e) {
+    public RespVO handleException(BindException e) {
         List<FieldError> fieldErrors = e.getFieldErrors();
         return convertFieldError(fieldErrors);
     }
 
-    private RespVO<Object> convertFieldError(List<FieldError> fieldErrors) {
+    private RespVO convertFieldError(List<FieldError> fieldErrors) {
         Locale locale = AuthContext.getUserLocale();
         List<String> errMessages = new ArrayList<>();
         for (FieldError fieldError : fieldErrors) {
@@ -68,39 +68,39 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public RespVO<Object> handleException(NoHandlerFoundException e) {
+    public RespVO handleException(NoHandlerFoundException e) {
         log.error("404 Not Found", e);
         Locale locale = AuthContext.getUserLocale();
         return ResponseUtil.buildNotFound(locale, e.getMessage());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public RespVO<Object> handleException(HttpRequestMethodNotSupportedException e) {
+    public RespVO handleException(HttpRequestMethodNotSupportedException e) {
         log.error("Request Method Not Supported", e);
         Locale locale = AuthContext.getUserLocale();
         return ResponseUtil.buildMethodNotSupport(locale, e.getMessage());
     }
 
     @ExceptionHandler(ServiceException.class)
-    public RespVO<Object> handleException(ServiceException e) {
+    public RespVO handleException(ServiceException e) {
         log.error("Service Exception", e);
         return ResponseUtil.build(e.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(ValidationException.class)
-    public RespVO<Object> handleException(ValidationException e) {
+    public RespVO handleException(ValidationException e) {
         return ResponseUtil.build(e.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(PermissionDeniedException.class)
-    public RespVO<Object> handleException(PermissionDeniedException e) {
+    public RespVO handleException(PermissionDeniedException e) {
         log.error("Permission Denied", e);
         Locale locale = AuthContext.getUserLocale();
         return ResponseUtil.buildResp(e.getCode(), e.getMessage(), locale);
     }
 
     @ExceptionHandler(Throwable.class)
-    public RespVO<Object> handleException(Throwable e) {
+    public RespVO handleException(Throwable e) {
         log.error("Internal Server Error", e);
         return ResponseUtil.build(CommonConstant.Code.INTERNAL_SERVER_ERROR, e.getMessage());
     }

@@ -51,16 +51,6 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi logGroup() {
-        return GroupedOpenApi.builder()
-                .group("Log API")
-                .addOpenApiCustomiser(this::addGlobalRequestHeaders)
-                .pathsToMatch("/api/v1/access-log/**",
-                        "/api/v1/operation-log/**")
-                .build();
-    }
-
-    @Bean
     public GroupedOpenApi demoGroup() {
         return GroupedOpenApi.builder()
                 .group("Demo API")

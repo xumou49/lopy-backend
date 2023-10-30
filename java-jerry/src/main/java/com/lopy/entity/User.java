@@ -8,8 +8,8 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("t_user")
-public class User extends Base {
+@TableName("c_user")
+public class User extends BaseEntity {
 
     private String openId;
     private String type;

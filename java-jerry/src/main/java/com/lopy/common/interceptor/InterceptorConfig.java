@@ -31,6 +31,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/api/v1/auth/**", "/api/v1/demo/**")
                 // favicon.ico
                 .excludePathPatterns("/favicon.ico")
+                // res
+                .excludePathPatterns("/api/v1/restaurant/**")
                 // swagger api
                 .excludePathPatterns(getSwaggerUris());
         registry.addInterceptor(logInterceptor)

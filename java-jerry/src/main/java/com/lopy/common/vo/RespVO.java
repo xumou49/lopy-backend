@@ -1,21 +1,47 @@
 package com.lopy.common.vo;
+import org.apache.http.HttpStatus;
+import java.util.HashMap;
+import java.util.Map;
 
-import com.lopy.common.constant.CommonConstant;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public class RespVO extends HashMap<String, Object> {
+    public RespVO() {
+        put("code", 200);
+        put("msg", "success");
+    }
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class RespVO<T> {
-    private String message = CommonConstant.SUCCESS_MSG;
-    private int code = 200;
-    private T data;
+    public static RespVO error() {
+        return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR");
+    }
 
-    public RespVO(T data) {
-        this.data = data;
+    public static RespVO error(String msg) {
+        return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
+    }
+
+    public static RespVO error(int code, String msg) {
+        RespVO r = new RespVO();
+        r.put("code", code);
+        r.put("msg", msg);
+        return r;
+    }
+
+    public static RespVO ok(String msg) {
+        RespVO r = new RespVO();
+        r.put("msg", msg);
+        return r;
+    }
+
+    public static RespVO ok(Map<String, Object> map) {
+        RespVO r = new RespVO();
+        r.putAll(map);
+        return r;
+    }
+
+    public static RespVO ok() {
+        return new RespVO();
+    }
+
+    public RespVO put(String key, Object value) {
+        super.put(key, value);
+        return this;
     }
 }

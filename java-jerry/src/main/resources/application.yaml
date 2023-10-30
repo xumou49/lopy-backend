@@ -11,9 +11,10 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: "jdbc:mysql://localhost:50000/lopy_db?characterEncoding=UTF-8&useSSL=false"
+    url: jdbc:mysql://localhost:3306/lopy-db?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
-    password: tUURfDnbVEh5
+    password: root
+#    password: tUURfDnbVEh5
 
   # redis
   redis:

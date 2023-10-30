@@ -23,34 +23,34 @@ public class DemoController {
 
     @PostMapping("/list")
     @Authorize(access = {CommonConstant.Account.RESTAURATEUR, CommonConstant.Account.CUSTOMER})
-    public RespVO<Void> list() {
+    public RespVO list() {
         System.out.println("in role list");
-        return new RespVO<>();
+        return RespVO.ok();
     }
 
     @PostMapping("/page")
     @Authorize(access = {CommonConstant.Account.RESTAURATEUR, CommonConstant.Account.CUSTOMER})
-    public RespVO<Void> page() {
+    public RespVO page() {
         System.out.println("in role page");
-        return new RespVO<>();
+        return RespVO.ok();
     }
 
     @PutMapping("/create")
     @Authorize(access = CommonConstant.Account.RESTAURATEUR)
-    public RespVO<Void> create() {
+    public RespVO create() {
         System.out.println("in role create");
-        return new RespVO<>();
+        return RespVO.ok();
     }
 
     @PutMapping("/modify")
     @Authorize(access = CommonConstant.Account.RESTAURATEUR)
-    public RespVO<Void> modify() {
-        return new RespVO<>();
+    public RespVO modify() {
+        return RespVO.ok();
     }
 
     @DeleteMapping("/delete")
     @Authorize(access = CommonConstant.Account.RESTAURATEUR)
-    public RespVO<Void> delete() {
-        return new RespVO<>();
+    public RespVO delete() {
+        return RespVO.ok();
     }
 }

@@ -31,22 +31,22 @@ public class JsonUtil {
 
     public static <T> T fromJsonToRefType(String json, TypeReference<T> typeReference) { return JSON.parseObject(json, typeReference); }
 
-    public static <T> RespVO<PageResult<T>> parseRespPageResult(String json, Class<T> clazz) {
-        ParameterizedTypeImpl inner = new ParameterizedTypeImpl(new Type[]{clazz}, null, PageResult.class);
-        ParameterizedTypeImpl outer = new ParameterizedTypeImpl(new Type[]{inner}, null, RespVO.class);
-        return JSON.parseObject(json, outer);
-    }
-
-    public static <T> RespVO<List<T>> parseRespListResult(String json, Class<T> clazz) {
-        ParameterizedTypeImpl inner = new ParameterizedTypeImpl(new Type[]{clazz}, null, List.class);
-        ParameterizedTypeImpl outer = new ParameterizedTypeImpl(new Type[]{inner}, null, RespVO.class);
-        return JSON.parseObject(json, outer);
-    }
-
-    public static <T> RespVO<T> parseRespObject(String json, Class<T> clazz) {
-        ParameterizedTypeImpl type = new ParameterizedTypeImpl(new Type[]{clazz}, null, RespVO.class);
-        return JSON.parseObject(json, type);
-    }
+//    public static <T> RespVO<PageResult<T>> parseRespPageResult(String json, Class<T> clazz) {
+//        ParameterizedTypeImpl inner = new ParameterizedTypeImpl(new Type[]{clazz}, null, PageResult.class);
+//        ParameterizedTypeImpl outer = new ParameterizedTypeImpl(new Type[]{inner}, null, RespVO.class);
+//        return JSON.parseObject(json, outer);
+//    }
+//
+//    public static <T> RespVO<List<T>> parseRespListResult(String json, Class<T> clazz) {
+//        ParameterizedTypeImpl inner = new ParameterizedTypeImpl(new Type[]{clazz}, null, List.class);
+//        ParameterizedTypeImpl outer = new ParameterizedTypeImpl(new Type[]{inner}, null, RespVO.class);
+//        return JSON.parseObject(json, outer);
+//    }
+//
+//    public static <T> RespVO<T> parseRespObject(String json, Class<T> clazz) {
+//        ParameterizedTypeImpl type = new ParameterizedTypeImpl(new Type[]{clazz}, null, RespVO.class);
+//        return JSON.parseObject(json, type);
+//    }
 
     public static JSONObject fromJson(String json) {
         return JSON.parseObject(json);

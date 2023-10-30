@@ -4,7 +4,7 @@
 
 <mapper namespace="com.lopy.dao.UserDAO">
 
-    <select id="listByPlatform" resultType="com.lopy.dao.entity.User">
+    <select id="listByPlatform" resultType="com.lopy.entity.User">
         select * from t_user where platform = #{platform} and deleted = 0
     </select>
 </mapper>

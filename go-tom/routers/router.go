@@ -7,13 +7,16 @@ import (
 )
 
 type Router struct {
-	PaymentAPI *api.PaymentAPI
+	PaymentAPI       *api.PaymentAPI
+	ServerCommandAPI *api.ServerCommandAPI
 }
 
 func NewRouter() Router {
 	paymentAPI := api.NewPaymentAPI()
+	serverCommandAPI := api.NewServerCommandAPI()
 	return Router{
-		PaymentAPI: paymentAPI,
+		PaymentAPI:       paymentAPI,
+		ServerCommandAPI: serverCommandAPI,
 	}
 }
 
@@ -35,6 +38,10 @@ func (r *Router) registerApi(app *gin.Engine) {
 		payment := v1.Group("/payment")
 		{
 			payment.PUT("/create", r.PaymentAPI.Create)
+		}
+		serverCommand := v1.Group("/server_command")
+		{
+			serverCommand.GET("/rebuild_lopy_svc", r.ServerCommandAPI.RebuildLopySvc)
 		}
 	}
 }

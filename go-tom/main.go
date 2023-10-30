@@ -28,11 +28,11 @@ func main() {
 	setting.InitSetting(confFile, confEnv)
 
 	// init log module
-	// log.Init(zapkitConf())
-	// defer log.Sync()
+	log.Init(zapkitConf())
+	defer log.Sync()
 
 	// print program start info
-	// printStarting()
+	printStarting()
 
 	app := initGinEngine()
 	_ = app.Run(":" + setting.Config.MustString("http.port", "8081"))

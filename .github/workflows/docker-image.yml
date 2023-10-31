@@ -37,7 +37,7 @@ jobs:
         with:
           context: java-jerry
           push: true
-          tags: ${{ secrets.REGISTRY }}/${{ secrets.IMAGE_NAME }}:latest
+          tags: ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}:latest
           # tags: lopy2023/lopy-java-jerry-svc:latest
 
   restart_svc:
@@ -49,7 +49,7 @@ jobs:
         id: rebuildSvc
         uses: fjogeleit/http-request-action@v1
         with:
-          url: ${{ secrets.REBUILD_WEBHOOK }}
+          url: ${{ vars.REBUILD_WEBHOOK }}
           method: "GET"
 
       - name: Show response from restarting program

@@ -6,6 +6,11 @@ on:
       - uat
       - prod
 
+env:
+  REBUILD_WEBHOOK: $REBUILD_WEBHOOK
+  REGISTRY: $REGISTRY
+  IMAGE_NAME: $IMAGE_NAME
+
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
@@ -41,6 +46,7 @@ jobs:
           # tags: lopy2023/lopy-java-jerry-svc:latest
 
   restart_svc:
+    needs: push_to_registry
     name: Rebuild and restart the lopy-svc program
     runs-on: ubuntu-latest
     steps:

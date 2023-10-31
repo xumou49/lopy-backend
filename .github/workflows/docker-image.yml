@@ -37,7 +37,7 @@ jobs:
         with:
           context: java-jerry
           push: true
-          tags: ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}:latest
+          tags: ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}
           # tags: lopy2023/lopy-java-jerry-svc:latest
 
   restart_svc:

@@ -14,27 +14,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestaurateurController {
 
     @PostMapping("/list")
-    public RespVO list() {
+    public RespVO<Void> list() {
         return RespVO.ok();
     }
 
     @PostMapping("/page")
-    public RespVO page() {
+    public RespVO<Void> page() {
         return RespVO.ok();
     }
 
     @PutMapping("/create")
-    public RespVO create() {
+    public RespVO<Void> create() {
         return RespVO.ok();
     }
 
     @PutMapping("/modify")
-    public RespVO modify() {
+    public RespVO<Void> modify() {
         return RespVO.ok();
     }
 
     @DeleteMapping("/delete")
-    public RespVO delete() {
+    public RespVO<Void> delete() {
         return RespVO.ok();
     }
 }

@@ -1,6 +1,6 @@
 package com.lopy.controller;
 import com.lopy.common.vo.RespVO;
-import com.lopy.entity.MenuItemEntity;
+import com.lopy.entity.MenuItem;
 import com.lopy.service.biz.intf.MenuItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,34 +16,33 @@ public class MenuItemController {
     private MenuItemService menuItemService;
 
     @RequestMapping("/list")
-    public RespVO list(@RequestParam Map<String, Object> params){
+    public RespVO<Void> list(@RequestParam Map<String, Object> params){
 
         return RespVO.ok();
     }
 
     @RequestMapping("/info/{id}")
-    public RespVO info(@PathVariable("id") Long id){
-		MenuItemEntity menuItem = menuItemService.getById(id);
-
-        return RespVO.ok().put("menuItem", menuItem);
+    public RespVO<MenuItem> info(@PathVariable("id") Long id){
+		MenuItem menuItem = menuItemService.getById(id);
+        return RespVO.ok(menuItem);
     }
 
     @RequestMapping("/save")
-    public RespVO save(@RequestBody MenuItemEntity menuItem){
+    public RespVO<Void> save(@RequestBody MenuItem menuItem){
 		menuItemService.save(menuItem);
 
         return RespVO.ok();
     }
 
     @RequestMapping("/update")
-    public RespVO update(@RequestBody MenuItemEntity menuItem){
+    public RespVO<Void> update(@RequestBody MenuItem menuItem){
 		menuItemService.updateById(menuItem);
 
         return RespVO.ok();
     }
 
     @RequestMapping("/delete")
-    public RespVO delete(@RequestBody Long[] ids){
+    public RespVO<Void> delete(@RequestBody Long[] ids){
 		menuItemService.removeByIds(Arrays.asList(ids));
 
         return RespVO.ok();

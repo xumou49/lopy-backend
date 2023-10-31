@@ -1,11 +1,9 @@
 package com.lopy.service.biz.intf;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lopy.entity.RestaurantEntity;
+import com.lopy.entity.Restaurant;
 
-import java.util.Map;
-
-public interface RestaurantService extends IService<RestaurantEntity> {
+public interface RestaurantService extends IService<Restaurant> {
 
 }
 

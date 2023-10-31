@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("c_user")
-public class User extends BaseEntity {
+public class User extends Base {
 
     private String openId;
     private String type;

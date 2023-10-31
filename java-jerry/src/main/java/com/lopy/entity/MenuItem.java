@@ -1,6 +1,5 @@
 package com.lopy.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,7 +7,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("c_menu_item")
-public class MenuItemEntity extends BaseEntity {
+public class MenuItem extends Base {
 	private Long restaurantId;
 	private String itemName;
 	private String description;

@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("c_menu")
-public class MenuEntity extends BaseEntity {
+public class Menu extends Base {
 	@TableId
 	private Long id;
 	private Long restaurantId;

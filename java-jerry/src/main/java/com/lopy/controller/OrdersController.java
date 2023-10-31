@@ -1,7 +1,7 @@
 package com.lopy.controller;
 import com.lopy.common.vo.RespVO;
 import com.lopy.service.biz.intf.OrdersService;
-import com.lopy.entity.OrdersEntity;
+import com.lopy.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,35 +17,34 @@ public class OrdersController {
     private OrdersService ordersService;
 
     @RequestMapping("/list")
-    public RespVO list(@RequestParam Map<String, Object> params){
+    public RespVO<Void> list(@RequestParam Map<String, Object> params){
 
         return RespVO.ok();
     }
 
 
     @RequestMapping("/info/{id}")
-    public RespVO info(@PathVariable("id") Long id){
-		OrdersEntity orders = ordersService.getById(id);
-
-        return RespVO.ok().put("orders", orders);
+    public RespVO<Order> info(@PathVariable("id") Long id){
+		Order order = ordersService.getById(id);
+        return RespVO.ok(order);
     }
 
     @RequestMapping("/save")
-    public RespVO save(@RequestBody OrdersEntity orders){
+    public RespVO<Void> save(@RequestBody Order orders){
 		ordersService.save(orders);
 
         return RespVO.ok();
     }
 
     @RequestMapping("/update")
-    public RespVO update(@RequestBody OrdersEntity orders){
+    public RespVO<Void> update(@RequestBody Order orders){
 		ordersService.updateById(orders);
 
         return RespVO.ok();
     }
 
     @RequestMapping("/delete")
-    public RespVO delete(@RequestBody Long[] ids){
+    public RespVO<Void> delete(@RequestBody Long[] ids){
 		ordersService.removeByIds(Arrays.asList(ids));
 
         return RespVO.ok();

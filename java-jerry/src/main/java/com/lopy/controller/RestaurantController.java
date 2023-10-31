@@ -1,6 +1,6 @@
 package com.lopy.controller;
 import com.lopy.common.vo.RespVO;
-import com.lopy.entity.RestaurantEntity;
+import com.lopy.entity.Restaurant;
 import com.lopy.service.biz.intf.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,35 +17,35 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @RequestMapping("/list")
-    public RespVO list(@RequestParam Map<String, Object> params){
+    public RespVO<Void> list(@RequestParam Map<String, Object> params){
 
         return RespVO.ok();
     }
 
 
     @GetMapping("/info/{id}")
-    public RespVO info(@PathVariable("id") Long id){
-		RestaurantEntity restaurant = restaurantService.getById(id);
+    public RespVO<Void> info(@PathVariable("id") Long id){
+		Restaurant restaurant = restaurantService.getById(id);
 
         return RespVO.ok().put("restaurant", restaurant);
     }
 
     @RequestMapping("/save")
-    public RespVO save(@RequestBody RestaurantEntity restaurant){
+    public RespVO<Void> save(@RequestBody Restaurant restaurant){
 		restaurantService.save(restaurant);
 
         return RespVO.ok();
     }
 
     @RequestMapping("/update")
-    public RespVO update(@RequestBody RestaurantEntity restaurant){
+    public RespVO<Void> update(@RequestBody Restaurant restaurant){
 		restaurantService.updateById(restaurant);
 
         return RespVO.ok();
     }
 
     @RequestMapping("/delete")
-    public RespVO delete(@RequestBody Long[] ids){
+    public RespVO<Void> delete(@RequestBody Long[] ids){
 		restaurantService.removeByIds(Arrays.asList(ids));
 
         return RespVO.ok();

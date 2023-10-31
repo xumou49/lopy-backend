@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("c_restaurant")
-public class RestaurantEntity extends BaseEntity {
+public class Restaurant extends Base {
 	private String name;
 	private String address;
 	private String labels;

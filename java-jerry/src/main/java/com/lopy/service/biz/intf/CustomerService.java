@@ -1,9 +1,9 @@
 package com.lopy.service.biz.intf;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lopy.entity.CustomerEntity;
+import com.lopy.entity.Customer;
 
-public interface CustomerService extends IService<CustomerEntity> {
+public interface CustomerService extends IService<Customer> {
 
 }
 

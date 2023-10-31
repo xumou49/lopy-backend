@@ -1,10 +1,10 @@
 package com.lopy.service.biz.intf;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lopy.entity.MenuEntity;
+import com.lopy.entity.Menu;
 
 
-public interface MenuService extends IService<MenuEntity> {
+public interface MenuService extends IService<Menu> {
 
 }
 

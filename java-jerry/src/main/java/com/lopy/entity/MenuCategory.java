@@ -6,12 +6,9 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("c_seating")
-public class SeatingEntity extends BaseEntity {
-
+@TableName("c_menu_category")
+public class MenuCategory extends Base {
 	private Long restaurantId;
-	private Integer tableNumber;
-	private Integer seatingCapacity;
-	private Integer status;
+	private String categoryName;
 
 }

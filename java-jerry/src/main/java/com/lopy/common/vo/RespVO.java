@@ -1,47 +1,45 @@
 package com.lopy.common.vo;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 import org.apache.http.HttpStatus;
-import java.util.HashMap;
-import java.util.Map;
 
-public class RespVO extends HashMap<String, Object> {
-    public RespVO() {
-        put("code", 200);
-        put("msg", "success");
-    }
+@Data
+public class RespVO<T> {
 
-    public static RespVO error() {
+    private String msg = "success";
+    private int code = 200;
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
+    private T data;
+
+    public static RespVO<Void> error() {
         return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR");
     }
 
-    public static RespVO error(String msg) {
+    public static RespVO<Void> error(String msg) {
         return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
     }
 
-    public static RespVO error(int code, String msg) {
-        RespVO r = new RespVO();
-        r.put("code", code);
-        r.put("msg", msg);
-        return r;
+    public static RespVO<Void> error(int code, String msg) {
+        RespVO<Void> respVO = new RespVO<>();
+        respVO.setCode(code);
+        respVO.setMsg(msg);
+        return respVO;
     }
 
-    public static RespVO ok(String msg) {
-        RespVO r = new RespVO();
-        r.put("msg", msg);
-        return r;
+    public static RespVO<Void> ok(String msg) {
+        RespVO<Void> respVO = new RespVO<>();
+        respVO.setMsg(msg);
+        return respVO;
     }
 
-    public static RespVO ok(Map<String, Object> map) {
-        RespVO r = new RespVO();
-        r.putAll(map);
-        return r;
+    public static <T> RespVO<T> ok(T data) {
+        RespVO<T> respVO = new RespVO<>();
+        respVO.setData(data);
+        return respVO;
     }
 
-    public static RespVO ok() {
-        return new RespVO();
-    }
-
-    public RespVO put(String key, Object value) {
-        super.put(key, value);
-        return this;
+    public static RespVO<Void> ok() {
+        return new RespVO<>();
     }
 }

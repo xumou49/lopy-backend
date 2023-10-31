@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Setter
 @Getter
-public class BaseEntity {
+public class Base {
 
     @TableId(type = IdType.AUTO)
     private Long id;

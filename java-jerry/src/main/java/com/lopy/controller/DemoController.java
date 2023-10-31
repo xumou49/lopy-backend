@@ -7,7 +7,6 @@ import com.lopy.service.biz.intf.AppleService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,34 +22,34 @@ public class DemoController {
 
     @PostMapping("/list")
     @Authorize(access = {CommonConstant.Account.RESTAURATEUR, CommonConstant.Account.CUSTOMER})
-    public RespVO list() {
+    public RespVO<Void> list() {
         System.out.println("in role list");
         return RespVO.ok();
     }
 
     @PostMapping("/page")
     @Authorize(access = {CommonConstant.Account.RESTAURATEUR, CommonConstant.Account.CUSTOMER})
-    public RespVO page() {
+    public RespVO<Void> page() {
         System.out.println("in role page");
         return RespVO.ok();
     }
 
     @PutMapping("/create")
     @Authorize(access = CommonConstant.Account.RESTAURATEUR)
-    public RespVO create() {
+    public RespVO<Void> create() {
         System.out.println("in role create");
         return RespVO.ok();
     }
 
     @PutMapping("/modify")
     @Authorize(access = CommonConstant.Account.RESTAURATEUR)
-    public RespVO modify() {
+    public RespVO<Void> modify() {
         return RespVO.ok();
     }
 
     @DeleteMapping("/delete")
     @Authorize(access = CommonConstant.Account.RESTAURATEUR)
-    public RespVO delete() {
+    public RespVO<Void> delete() {
         return RespVO.ok();
     }
 }

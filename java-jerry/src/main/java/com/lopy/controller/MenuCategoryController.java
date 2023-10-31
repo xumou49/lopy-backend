@@ -1,53 +1,54 @@
 package com.lopy.controller;
+
+import com.lopy.common.constant.CommonConstant;
+import com.lopy.common.dto.menu.MenuCategoryDTO;
 import com.lopy.common.vo.RespVO;
 import com.lopy.entity.MenuCategory;
 import com.lopy.service.biz.intf.MenuCategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
-
+@Tag(name = "Menu Category API")
 @RestController
-@RequestMapping("/menucategory")
+@RequestMapping(CommonConstant.API.V1_PATH + "/menu-category")
 public class MenuCategoryController {
+
     @Autowired
     private MenuCategoryService menuCategoryService;
 
-    @RequestMapping("/list")
-    public RespVO<Void> list(@RequestParam Map<String, Object> params){
-
+    @PostMapping("/list")
+    public RespVO<Void> list() {
         return RespVO.ok();
     }
 
-
-    @RequestMapping("/info/{id}")
-    public RespVO<Void> info(@PathVariable("id") Long id){
+    @GetMapping("/info")
+    public RespVO<MenuCategory> info(@RequestParam Long id) {
 		MenuCategory menuCategory = menuCategoryService.getById(id);
-
-        return RespVO.ok().put("menuCategory", menuCategory);
+        return RespVO.ok(menuCategory);
     }
 
-    @RequestMapping("/save")
-    public RespVO<Void> save(@RequestBody MenuCategory menuCategory){
-		menuCategoryService.save(menuCategory);
-
+    @PutMapping("/save")
+    public RespVO<Void> save(@RequestBody MenuCategoryDTO menuCategoryDTO) {
         return RespVO.ok();
     }
 
-    @RequestMapping("/update")
-    public RespVO<Void> update(@RequestBody MenuCategory menuCategory){
-		menuCategoryService.updateById(menuCategory);
-
+    @PutMapping("/update")
+    public RespVO<Void> update(@RequestBody MenuCategoryDTO menuCategoryDTO) {
         return RespVO.ok();
     }
 
-    @RequestMapping("/delete")
-    public RespVO<Void> delete(@RequestBody Long[] ids){
-		menuCategoryService.removeByIds(Arrays.asList(ids));
-
+    @PutMapping("/delete")
+    public RespVO<Void> delete(@RequestBody List<Long> ids){
+		menuCategoryService.removeByIds(ids);
         return RespVO.ok();
     }
-
 }

@@ -1,5 +1,6 @@
 package com.lopy.controller;
 
+import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.vo.RespVO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Customer API")
 @RestController
-@RequestMapping("/api/v1/customer")
+@RequestMapping(CommonConstant.API.V1_PATH + "/customer")
 public class CustomerController {
 
     @PostMapping("/list")

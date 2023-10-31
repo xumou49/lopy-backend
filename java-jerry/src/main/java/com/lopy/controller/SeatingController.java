@@ -1,51 +1,53 @@
 package com.lopy.controller;
+
+import com.lopy.common.constant.CommonConstant;
+import com.lopy.common.dto.restaurant.SeatingDTO;
 import com.lopy.common.vo.RespVO;
 import com.lopy.entity.Seating;
 import com.lopy.service.biz.intf.SeatingService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
-
+@Tag(name = "Seating API")
 @RestController
-@RequestMapping("/seating")
+@RequestMapping(CommonConstant.API.V1_PATH + "/seating")
 public class SeatingController {
+
     @Autowired
     private SeatingService seatingService;
 
-    @RequestMapping("/list")
-    public RespVO<Void> list(@RequestParam Map<String, Object> params){
-        return RespVO.ok().put("page", "");
+    @PostMapping("/list")
+    public RespVO<Void> list() {
+        return RespVO.ok();
     }
 
-
-    @RequestMapping("/info/{id}")
-    public RespVO<Void> info(@PathVariable("id") Long id){
+    @GetMapping("/info")
+    public RespVO<Seating> info(@RequestParam Long id) {
 		Seating seating = seatingService.getById(id);
-
-        return RespVO.ok().put("seating", seating);
+        return RespVO.ok(seating);
     }
 
-    @RequestMapping("/save")
-    public RespVO<Void> save(@RequestBody Seating seating){
-		seatingService.save(seating);
-
+    @PutMapping("/save")
+    public RespVO<Void> save(@RequestBody SeatingDTO seatingDTO) {
         return RespVO.ok();
     }
 
-    @RequestMapping("/update")
-    public RespVO<Void> update(@RequestBody Seating seating){
-		seatingService.updateById(seating);
-
+    @PutMapping("/update")
+    public RespVO<Void> update(@RequestBody Seating seatingDTO) {
         return RespVO.ok();
     }
 
-    @RequestMapping("/delete")
-    public RespVO<Void> delete(@RequestBody Long[] ids){
-		seatingService.removeByIds(Arrays.asList(ids));
-
+    @PutMapping("/delete")
+    public RespVO<Void> delete(@RequestBody List<Long> ids) {
         return RespVO.ok();
     }
 

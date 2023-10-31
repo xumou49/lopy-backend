@@ -8,6 +8,12 @@ public class CommonConstant {
 
     public static final int STATUS_SUCCESS = 200;
 
+    public static class API {
+        private API() {}
+
+        public static final String V1_PATH = "/api/v1";
+    }
+
     public static class Code {
         private Code() {}
 

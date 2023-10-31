@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Demo API")
-@RequestMapping("/api/v1/demo")
+@RequestMapping(CommonConstant.API.V1_PATH + "/demo")
 @RestController
 public class DemoController {
 

@@ -1,10 +1,10 @@
 package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
-import com.lopy.common.dto.menu.MenuDTO;
+import com.lopy.common.dto.order.OrderDTO;
 import com.lopy.common.vo.RespVO;
-import com.lopy.entity.Menu;
-import com.lopy.service.biz.intf.MenuService;
+import com.lopy.entity.Order;
+import com.lopy.service.biz.intf.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,37 +17,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Tag(name = "Menu API")
+
+@Tag(name = "Order API")
 @RestController
-@RequestMapping(CommonConstant.API.V1_PATH + "/menu")
-public class MenuController {
+@RequestMapping(CommonConstant.API.V1_PATH + "/order")
+public class OrderController {
     @Autowired
-    private MenuService menuService;
+    private OrderService ordersService;
 
     @PostMapping("/list")
-    public RespVO<Void> list() {
+    public RespVO<Void> list(){
         return RespVO.ok();
     }
 
+
     @GetMapping("/info")
-    public RespVO<Menu> info(@RequestParam("id") Long id) {
-        Menu menu = menuService.getById(id);
-        return RespVO.ok(menu);
+    public RespVO<Order> info(@RequestParam("id") Long id){
+		Order order = ordersService.getById(id);
+        return RespVO.ok(order);
     }
 
     @PutMapping("/save")
-    public RespVO<Void> save(@RequestBody MenuDTO menuDTO) {
+    public RespVO<Void> save(@RequestBody OrderDTO orderDTO){
         return RespVO.ok();
     }
 
     @PutMapping("/update")
-    public RespVO<Void> update(@RequestBody MenuDTO menuDTO) {
+    public RespVO<Void> update(@RequestBody OrderDTO orderDTO) {
         return RespVO.ok();
     }
 
     @PutMapping("/delete")
-    public RespVO<Void> delete(@RequestBody List<Long> ids) {
-        menuService.removeByIds(ids);
+    public RespVO<Void> delete(@RequestBody List<Long> ids){
         return RespVO.ok();
     }
 }

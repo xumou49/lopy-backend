@@ -1,56 +1,53 @@
 package com.lopy.controller;
-import com.lopy.common.vo.RespVO;
 
+import com.lopy.common.constant.CommonConstant;
+import com.lopy.common.dto.order.OrderItemDTO;
+import com.lopy.common.vo.RespVO;
 import com.lopy.entity.OrderItem;
 import com.lopy.service.biz.intf.OrderItemService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
-
-
-
+@Tag(name = "Order Item API")
 @RestController
-@RequestMapping("/orderitem")
+@RequestMapping(CommonConstant.API.V1_PATH + "/order-item")
 public class OrderItemController {
+
     @Autowired
     private OrderItemService orderItemService;
 
-    @RequestMapping("/list")
-    public RespVO<Void> list(@RequestParam Map<String, Object> params){
-
+    @PostMapping("/list")
+    public RespVO<Void> list(){
         return RespVO.ok();
     }
 
-
-    @RequestMapping("/info/{id}")
-    public RespVO<Void> info(@PathVariable("id") Long id){
+    @GetMapping("/info")
+    public RespVO<OrderItem> info(@RequestParam("id") Long id){
 		OrderItem orderItem = orderItemService.getById(id);
-
-        return RespVO.ok().put("orderItem", orderItem);
+        return RespVO.ok(orderItem);
     }
 
-    @RequestMapping("/save")
-    public RespVO<Void> save(@RequestBody OrderItem orderItem){
-		orderItemService.save(orderItem);
-
+    @PutMapping("/save")
+    public RespVO<Void> save(@RequestBody OrderItemDTO orderItemDTO){
         return RespVO.ok();
     }
 
-    @RequestMapping("/update")
-    public RespVO<Void> update(@RequestBody OrderItem orderItem){
-		orderItemService.updateById(orderItem);
-
+    @PutMapping("/update")
+    public RespVO<Void> update(@RequestBody OrderItemDTO orderItemDTO){
         return RespVO.ok();
     }
 
-    @RequestMapping("/delete")
-    public RespVO<Void> delete(@RequestBody Long[] ids){
-		orderItemService.removeByIds(Arrays.asList(ids));
-
+    @PutMapping("/delete")
+    public RespVO<Void> delete(@RequestBody List<Long> ids){
         return RespVO.ok();
     }
-
 }

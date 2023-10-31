@@ -1,5 +1,6 @@
 package com.lopy.controller;
 
+import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.auth.LoginDTO;
 import com.lopy.common.vo.RespVO;
 import com.lopy.service.biz.intf.AuthService;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Auth API")
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping(CommonConstant.API.V1_PATH + "/auth")
 public class AuthController {
 
     @Autowired

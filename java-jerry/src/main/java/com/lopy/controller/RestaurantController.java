@@ -1,53 +1,54 @@
 package com.lopy.controller;
+
+import com.lopy.common.constant.CommonConstant;
+import com.lopy.common.dto.restaurant.RestaurantDTO;
 import com.lopy.common.vo.RespVO;
 import com.lopy.entity.Restaurant;
 import com.lopy.service.biz.intf.RestaurantService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
 
-
+@Tag(name = "Restaurant API")
 @RestController
-@RequestMapping("/api/v1/restaurant")
+@RequestMapping(CommonConstant.API.V1_PATH + "/restaurant")
 public class RestaurantController {
+
     @Autowired
     private RestaurantService restaurantService;
 
-    @RequestMapping("/list")
-    public RespVO<Void> list(@RequestParam Map<String, Object> params){
-
+    @PostMapping("/list")
+    public RespVO<Void> list(){
         return RespVO.ok();
     }
 
-
-    @GetMapping("/info/{id}")
-    public RespVO<Void> info(@PathVariable("id") Long id){
+    @GetMapping("/info")
+    public RespVO<Restaurant> info(@RequestParam Long id){
 		Restaurant restaurant = restaurantService.getById(id);
-
-        return RespVO.ok().put("restaurant", restaurant);
+        return RespVO.ok(restaurant);
     }
 
-    @RequestMapping("/save")
-    public RespVO<Void> save(@RequestBody Restaurant restaurant){
-		restaurantService.save(restaurant);
-
+    @PutMapping("/save")
+    public RespVO<Void> save(@RequestBody RestaurantDTO restaurantDTO){
         return RespVO.ok();
     }
 
-    @RequestMapping("/update")
-    public RespVO<Void> update(@RequestBody Restaurant restaurant){
-		restaurantService.updateById(restaurant);
-
+    @PutMapping("/update")
+    public RespVO<Void> update(@RequestBody RestaurantDTO restaurantDTO){
         return RespVO.ok();
     }
 
-    @RequestMapping("/delete")
-    public RespVO<Void> delete(@RequestBody Long[] ids){
-		restaurantService.removeByIds(Arrays.asList(ids));
-
+    @PutMapping("/delete")
+    public RespVO<Void> delete(@RequestBody List<Long> ids){
         return RespVO.ok();
     }
 

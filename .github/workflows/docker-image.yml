@@ -49,7 +49,9 @@ jobs:
         id: rebuildSvc
         uses: fjogeleit/http-request-action@v1
         with:
-          url: ${{ vars.REBUILD_WEBHOOK }}
+          # url: ${{ vars.REBUILD_WEBHOOK }}
+          url: "https://webhook-lopy.wanioco.com/webhook/api/v1/server_command/rebuild_lopy_svc"
+          timeout: 60000
           method: "GET"
 
       - name: Show response from restarting program

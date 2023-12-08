@@ -4,6 +4,7 @@ import com.lopy.common.auth.Authorize;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.vo.RespVO;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,10 +12,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+
 @Tag(name = "Demo API")
 @RequestMapping(CommonConstant.API.V1_PATH + "/demo")
 @RestController
 public class DemoController {
+
+    @Value("${app.version}")
+    private String appVersion;
 
     @PostMapping("/list")
     @Authorize(access = {CommonConstant.Account.RESTAURATEUR, CommonConstant.Account.CUSTOMER})
@@ -50,7 +59,10 @@ public class DemoController {
     }
 
     @GetMapping("/test-build")
-    public RespVO<Void> testBuild() {
-        return RespVO.ok();
+    public RespVO<?> testBuild() {
+        Map<String, Object> params = new HashMap<>();
+        params.put("time", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        params.put("version", appVersion);
+        return RespVO.ok(params);
     }
 }

@@ -29,8 +29,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          # username: loopy2023888@gmail.com
-          # password: lopyDocker2023!
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -38,7 +36,6 @@ jobs:
           context: java-jerry
           push: true
           tags: ${{ vars.REGISTRY }}/${{ vars.IMAGE_NAME }}
-          # tags: lopy2023/lopy-java-jerry-svc:latest
 
   restart_svc:
     needs: push_to_registry
@@ -49,8 +46,7 @@ jobs:
         id: rebuildSvc
         uses: fjogeleit/http-request-action@v1
         with:
-          # url: ${{ vars.REBUILD_WEBHOOK }}
-          url: "https://webhook-lopy.wanioco.com/webhook/api/v1/server_command/rebuild_lopy_svc"
+          url: ${{ vars.REBUILD_WEBHOOK }}
           timeout: 60000
           method: "GET"
 

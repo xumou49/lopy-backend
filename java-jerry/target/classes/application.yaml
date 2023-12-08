@@ -14,7 +14,6 @@ spring:
     url: jdbc:mysql://mysql:50000/lopy_db?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: tUURfDnbVEh5
-#    password: tUURfDnbVEh5
 
   # redis
   redis:

@@ -14,7 +14,7 @@ public class User extends Base {
     private String openId;
     private String type;
     private String email;
-    private Integer platform;
+    private Integer loginPlatform;
     private String phone;
     private String locale;
     private Integer device;

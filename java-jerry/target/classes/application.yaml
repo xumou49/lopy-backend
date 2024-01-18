@@ -1,6 +1,9 @@
 server:
   port: 8080
 
+app:
+  version: v1.0.0
+
 spring:
   # message
   messages:
@@ -12,12 +15,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://mysql:50000/lopy_db?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: tUURfDnbVEh5
+    username: ##_mysqlUsername_##
+    password: ##_mysqlPassword_##
 
   # redis
   redis:
-    host: 127.0.0.1
+    host: redis
     port: 49999
     database: 0
     # password: Mylopy8888

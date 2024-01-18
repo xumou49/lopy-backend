@@ -1,6 +1,7 @@
 package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
+import com.lopy.common.dto.account.UserDTO;
 import com.lopy.common.vo.RespVO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @PutMapping("/create")
-    public RespVO<Void> create() {
+    public RespVO<Void> create(UserDTO userDTO) {
         return RespVO.ok();
     }
 

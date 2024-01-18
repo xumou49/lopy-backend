@@ -69,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
             user.setType(CommonConstant.Account.CUSTOMER);
             user.setEmail(email);
             user.setOpenId(openId);
-            user.setPlatform(platform);
+            user.setLoginPlatform(platform);
             user.setDevice(AuthContext.getUserDevice());
             user.setLocale(AuthContext.getUserLocale().toString());
             userDAO.insert(user);

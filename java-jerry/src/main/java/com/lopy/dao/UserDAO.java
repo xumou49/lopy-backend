@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface UserDAO extends BaseMapper<User> {
 
-    @Select("select * from t_user where open_id = #{openId} and platform = #{platform} and deleted = 0")
+    @Select("select * from c_user where open_id = #{openId} and login_platform = #{platform} and deleted = 0")
     User getByOpenIdAndPlatform(@Param("openId") String openId, @Param("platform") Integer platform);
 }

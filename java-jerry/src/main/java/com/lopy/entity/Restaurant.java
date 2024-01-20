@@ -13,5 +13,4 @@ public class Restaurant extends Base {
 	private Long restaurateurId;
 	private String operatingHours;
 	private String contactDetails;
-
 }

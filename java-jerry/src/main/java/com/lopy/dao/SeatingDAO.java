@@ -2,8 +2,9 @@ package com.lopy.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import com.lopy.entity.Customer;
+import com.lopy.entity.Seating;
+
 @Mapper
-public interface CustomerDao extends BaseMapper<Customer> {
+public interface SeatingDAO extends BaseMapper<Seating> {
 	
 }

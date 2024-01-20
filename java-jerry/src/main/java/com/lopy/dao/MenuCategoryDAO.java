@@ -2,8 +2,8 @@ package com.lopy.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import com.lopy.entity.Menu;
+import com.lopy.entity.MenuCategory;
 @Mapper
-public interface MenuDao extends BaseMapper<Menu> {
+public interface MenuCategoryDAO extends BaseMapper<MenuCategory> {
 	
 }

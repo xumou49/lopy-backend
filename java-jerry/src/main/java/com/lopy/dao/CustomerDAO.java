@@ -2,9 +2,8 @@ package com.lopy.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import com.lopy.entity.Restaurateur;
-
+import com.lopy.entity.Customer;
 @Mapper
-public interface RestaurateurDao extends BaseMapper<Restaurateur> {
+public interface CustomerDAO extends BaseMapper<Customer> {
 	
 }

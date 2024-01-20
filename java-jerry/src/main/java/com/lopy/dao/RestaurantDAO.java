@@ -5,6 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import com.lopy.entity.Restaurant;
 
 @Mapper
-public interface RestaurantDao extends BaseMapper<Restaurant> {
+public interface RestaurantDAO extends BaseMapper<Restaurant> {
 	
 }

@@ -2,7 +2,9 @@ package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.restaurant.RestaurantDTO;
+import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.vo.RespVO;
+import com.lopy.common.vo.RestaurantVO;
 import com.lopy.entity.Restaurant;
 import com.lopy.service.biz.intf.RestaurantService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +29,7 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @PostMapping("/list")
-    public RespVO<Void> list(){
+    public RespVO<Void> list(@RequestBody RestaurantDTO restaurantDTO) {
         return RespVO.ok();
     }
 

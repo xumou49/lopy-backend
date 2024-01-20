@@ -29,8 +29,9 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @PostMapping("/list")
-    public RespVO<Void> list(@RequestBody RestaurantDTO restaurantDTO) {
-        return RespVO.ok();
+    public RespVO<List<RestaurantVO>> list(@RequestBody RestaurantDTO restaurantDTO) {
+        List<RestaurantVO> list = restaurantService.listByQuery(restaurantDTO);
+        return RespVO.ok(list);
     }
 
     @GetMapping("/info")

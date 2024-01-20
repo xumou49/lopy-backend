@@ -2,20 +2,54 @@ package com.lopy.service.biz.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lopy.common.dto.restaurant.RestaurantDTO;
+import com.lopy.common.pagination.SearchPage;
+import com.lopy.common.query.RestaurantQuery;
+import com.lopy.common.utils.DateUtil;
 import com.lopy.common.vo.RestaurantVO;
 import com.lopy.dao.RestaurantDAO;
 import com.lopy.entity.Restaurant;
 import com.lopy.service.biz.intf.RestaurantService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("restaurantService")
 public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant> implements RestaurantService {
 
+    private RestaurantVO toRestaurantVO(Restaurant restaurant) {
+        RestaurantVO restaurantVO = new RestaurantVO();
+        BeanUtils.copyProperties(restaurant, restaurantVO);
+        return restaurantVO;
+    }
+
     @Override
     public List<RestaurantVO> listByQuery(RestaurantDTO restaurantDTO) {
+        // if search for restaurant with promotion, find those which has promotion within today
+        if (restaurantDTO.getPromotionSearch()) {
+            LocalDateTime now = LocalDateTime.now();
+            String startDate = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0).format(DateTimeFormatter.ofPattern(DateUtil.DATE_TIME));
+            String endDate = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 23, 59).format(DateTimeFormatter.ofPattern(DateUtil.DATE_TIME));
+            List<Restaurant> list = baseMapper.selectByPromotion(startDate, endDate);
+            return list.stream().map(this::toRestaurantVO).collect(Collectors.toList());
+        }
 
-        return null;
+        // search restaurant with high highest rank (todo)
+        SearchPage searchPage = restaurantDTO.getSearchPage();
+        RestaurantQuery restaurantQuery = new RestaurantQuery();
+        restaurantQuery.setName(searchPage.getKeyword());
+        return baseMapper.selectByQuery(restaurantQuery).stream().map(this::toRestaurantVO).collect(Collectors.toList());
     }
+
+    // private List<RestaurantVO> paginationSearchDemo(SearchPage searchPage) {
+    //     RestaurantQuery restaurantQuery = new RestaurantQuery();
+    //     restaurantQuery.setName(searchPage.getKeyword());
+    //     // query with pagination
+    //     Page<Restaurant> page = new Page<>(searchPage.getPage(), searchPage.getPageSize());
+    //     PageResult<Restaurant> pageResult = PaginationUtil.buildPageResult(baseMapper.selectByQuery(page, restaurantQuery), searchPage);
+    //     return pageResult.getContent().stream().map(this::toRestaurantVO).collect(Collectors.toList());
+    // }
 }

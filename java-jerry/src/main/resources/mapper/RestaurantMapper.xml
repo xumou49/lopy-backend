@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lopy.dao.RestaurantDAO">
+
+    <select id="selectByPromotion" resultType="com.lopy.entity.Restaurant">
+        select restaurant.* from c_restaurant restaurant
+        inner join c_restaurant_promotion restaurant_promotion on restaurant.id = restaurant_promotion.restaurant_id
+        inner join c_promotion promotion on promotion.id = restaurant_promotion.promotion_id
+        <where>
+             restaurant_promotion.start_date &gt; #{startDate} and restaurant_promotion.end_date &lt; #{endDate}
+        </where>
+        order by promotion.discount
+    </select>
+    
+    <sql id="restaurantQuerySelect">
+        <if test="query.name != null and query.name != ''">
+            name like concat('%', #{query.name}, '%')
+        </if>
+    </sql>
+
+    <select id="selectByPageAndQuery" resultType="com.lopy.entity.Restaurant">
+        select restaurant.*
+        from c_restaurant restaurant
+        <where>
+            <include refid="restaurantQuerySelect"></include>
+        </where>
+    </select>
+    
+    <select id="selectByQuery" resultType="com.lopy.entity.Restaurant">
+        select restaurant.*
+        from c_restaurant restaurant
+        <where>
+            <include refid="restaurantQuerySelect"></include>
+        </where> 
+    </select>
+</mapper>

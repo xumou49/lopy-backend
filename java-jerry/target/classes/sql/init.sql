@@ -22,6 +22,10 @@ drop table if exists c_orders;
 
 drop table if exists c_restaurant;
 
+drop table if exists c_promotion;
+
+drop table if exists c_restaurant_promotion;
+
 /*==============================================================*/
 /* Table: c_restaurant                                             */
 /*==============================================================*/
@@ -213,3 +217,22 @@ create table c_restaurateur
 
 alter table c_restaurateur
     comment 'c_restaurateur';
+
+
+CREATE TABLE `c_restaurant_promotion` (
+    `restaurant_id` bigint(20) NOT NULL,
+    `promotion_id` bigint(20) NOT NULL,
+    `start_date` datetime DEFAULT NULL,
+    `end_date` datetime DEFAULT NULL,
+    `create_date` datetime DEFAULT NULL,
+    PRIMARY KEY (`restaurant_id`,`promotion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `c_promotion` (
+   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+   `name` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+   `discount` double DEFAULT NULL,
+   `modify_date` datetime DEFAULT NULL,
+   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

@@ -4,7 +4,8 @@ import com.lopy.common.pagination.SearchPage;
 import lombok.Data;
 
 @Data
-public class RestaurantDTO extends SearchPage {
+public class RestaurantDTO {
 
-    private Integer promotionFlag;
+    private SearchPage searchPage = new SearchPage();
+    private Boolean promotionSearch;
 }

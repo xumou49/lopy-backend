@@ -3,17 +3,10 @@ package com.lopy.controller;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.order.OrderItemDTO;
 import com.lopy.common.vo.RespVO;
-import com.lopy.entity.OrderItem;
 import com.lopy.service.biz.intf.OrderItemService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,12 +21,6 @@ public class OrderItemController {
     @PostMapping("/list")
     public RespVO<Void> list(){
         return RespVO.ok();
-    }
-
-    @GetMapping("/info")
-    public RespVO<OrderItem> info(@RequestParam("id") Long id){
-		OrderItem orderItem = orderItemService.getById(id);
-        return RespVO.ok(orderItem);
     }
 
     @PutMapping("/save")

@@ -16,7 +16,11 @@
     
     <sql id="restaurantQuerySelect">
         <if test="query.name != null and query.name != ''">
-            name like concat('%', #{query.name}, '%')
+            and name like concat('%', #{query.name}, '%')
+        </if>
+
+        <if test="query.cuisine != null and query.cuisine != ''">
+            and labels like concat('%', #{query.cuisine}, '%')
         </if>
     </sql>
 

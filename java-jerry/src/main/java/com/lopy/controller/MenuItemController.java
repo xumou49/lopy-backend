@@ -7,13 +7,7 @@ import com.lopy.entity.MenuItem;
 import com.lopy.service.biz.intf.MenuItemService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,12 +22,6 @@ public class MenuItemController {
     public RespVO<Void> list() {
 
         return RespVO.ok();
-    }
-
-    @GetMapping("/info")
-    public RespVO<MenuItem> info(@RequestParam Long id){
-		MenuItem menuItem = menuItemService.getById(id);
-        return RespVO.ok(menuItem);
     }
 
     @PutMapping("/save")

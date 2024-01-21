@@ -3,17 +3,10 @@ package com.lopy.controller;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.menu.MenuDTO;
 import com.lopy.common.vo.RespVO;
-import com.lopy.entity.Menu;
 import com.lopy.service.biz.intf.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,12 +22,6 @@ public class MenuController {
         return RespVO.ok();
     }
 
-    @GetMapping("/info")
-    public RespVO<Menu> info(@RequestParam("id") Long id) {
-        Menu menu = menuService.getById(id);
-        return RespVO.ok(menu);
-    }
-
     @PutMapping("/save")
     public RespVO<Void> save(@RequestBody MenuDTO menuDTO) {
         return RespVO.ok();
@@ -47,7 +34,7 @@ public class MenuController {
 
     @PutMapping("/delete")
     public RespVO<Void> delete(@RequestBody List<Long> ids) {
-        menuService.removeByIds(ids);
+        // menuService.removeByIds(ids);
         return RespVO.ok();
     }
 }

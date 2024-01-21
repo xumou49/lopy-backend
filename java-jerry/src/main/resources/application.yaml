@@ -3,6 +3,7 @@ server:
 
 app:
   version: v1.0.0
+  image-domain: "https://api-lopy.wanioco.com"
 
 spring:
   # message
@@ -15,8 +16,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://mysql:50000/lopy_db?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
-    # username: ##_mysqlUsername_##
-    # password: ##_mysqlPassword_##
     username: root
     password: 'tUURfDnbVEh5'
 

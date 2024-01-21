@@ -10,7 +10,7 @@ import com.lopy.entity.User;
  * @email sunlightcs@gmail.com
  * @date 2023-10-29 00:33:52
  */
-public interface UserService extends IService<User> {
+public interface UserService {
 
 }
 

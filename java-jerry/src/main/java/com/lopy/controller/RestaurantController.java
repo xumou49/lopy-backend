@@ -2,20 +2,12 @@ package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.restaurant.RestaurantDTO;
-import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.vo.RespVO;
-import com.lopy.common.vo.RestaurantVO;
-import com.lopy.entity.Restaurant;
+import com.lopy.common.vo.restaurant.RestaurantVO;
 import com.lopy.service.biz.intf.RestaurantService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,9 +27,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/info")
-    public RespVO<Restaurant> info(@RequestParam Long id){
-		Restaurant restaurant = restaurantService.getById(id);
-        return RespVO.ok(restaurant);
+    public RespVO<RestaurantVO> info(@RequestParam Long id){
+        RestaurantVO restaurantVO = restaurantService.getById(id);
+        return RespVO.ok(restaurantVO);
     }
 
     @PutMapping("/save")

@@ -8,4 +8,5 @@ public class RestaurantDTO {
 
     private SearchPage searchPage = new SearchPage();
     private Boolean promotionSearch = false;
+    private String cuisine;
 }

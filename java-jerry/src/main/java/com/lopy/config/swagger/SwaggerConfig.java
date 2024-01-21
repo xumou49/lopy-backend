@@ -1,11 +1,8 @@
 package com.lopy.config.swagger;
 
 import com.lopy.common.constant.AuthConstant;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.headers.Header;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.media.StringSchema;
@@ -46,6 +43,7 @@ public class SwaggerConfig {
                         "/api/v1/menu-item/**",
                         "/api/v1/cart/**",
                         "/api/v1/order/**",
+                        "/api/v1/cuisine/**",
                         "/api/v1/payment/**")
                 .build();
     }

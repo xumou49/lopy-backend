@@ -5,11 +5,12 @@ import com.lopy.common.dto.restaurant.RestaurantDTO;
 import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.query.RestaurantQuery;
 import com.lopy.common.utils.DateUtil;
-import com.lopy.common.vo.RestaurantVO;
+import com.lopy.common.vo.restaurant.RestaurantVO;
 import com.lopy.dao.RestaurantDAO;
 import com.lopy.entity.Restaurant;
 import com.lopy.service.biz.intf.RestaurantService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,9 +21,13 @@ import java.util.stream.Collectors;
 @Service("restaurantService")
 public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant> implements RestaurantService {
 
+    @Value("${app.image-domain}")
+    private String imageDomain;
+
     private RestaurantVO toRestaurantVO(Restaurant restaurant) {
         RestaurantVO restaurantVO = new RestaurantVO();
         BeanUtils.copyProperties(restaurant, restaurantVO);
+        restaurantVO.setImageUrl(imageDomain + restaurant.getImagePath());
         return restaurantVO;
     }
 
@@ -41,7 +46,13 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
         SearchPage searchPage = restaurantDTO.getSearchPage();
         RestaurantQuery restaurantQuery = new RestaurantQuery();
         restaurantQuery.setName(searchPage.getKeyword());
+        restaurantQuery.setCuisine(restaurantDTO.getCuisine());
         return baseMapper.selectByQuery(restaurantQuery).stream().map(this::toRestaurantVO).collect(Collectors.toList());
+    }
+
+    @Override
+    public RestaurantVO getById(Long id) {
+        return toRestaurantVO(super.getById(id));
     }
 
     // private List<RestaurantVO> paginationSearchDemo(SearchPage searchPage) {

@@ -1,4 +1,4 @@
-package com.lopy.common.vo;
+package com.lopy.common.vo.restaurant;
 
 import lombok.Data;
 

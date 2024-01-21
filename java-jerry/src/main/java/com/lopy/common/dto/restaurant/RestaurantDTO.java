@@ -7,5 +7,5 @@ import lombok.Data;
 public class RestaurantDTO {
 
     private SearchPage searchPage = new SearchPage();
-    private Boolean promotionSearch;
+    private Boolean promotionSearch = false;
 }

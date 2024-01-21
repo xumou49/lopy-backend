@@ -12,4 +12,6 @@ public class RestaurantVO {
     private Long restaurateurId;
     private String operatingHours;
     private String contactDetails;
+    private String imageUrl;
+    private String rating = "4.8";
 }

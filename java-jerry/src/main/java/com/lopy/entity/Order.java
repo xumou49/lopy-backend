@@ -1,5 +1,6 @@
 package com.lopy.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,4 +17,8 @@ public class Order extends Base {
 	private Double taxes;
 	private Double discounts;
 	private String voidRemark;
+
+	// The attributes below are used for DAO mapping only
+	@TableField(exist = false)
+	private String restaurantName;
 }

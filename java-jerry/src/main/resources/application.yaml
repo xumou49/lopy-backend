@@ -19,13 +19,17 @@ spring:
     username: root
     password: 'tUURfDnbVEh5'
 
-
   # redis
   redis:
     host: redis
     port: 49999
     database: 0
     # password: Mylopy8888
+
+  # date format in response body
+  jackson:
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    time-zone: "GMT+8"
 
 # springdoc
 springdoc:

@@ -1,8 +1,11 @@
 package com.lopy.controller;
 
+import com.lopy.common.auth.AuthContext;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.order.OrderDTO;
+import com.lopy.common.pagination.PageResult;
 import com.lopy.common.vo.RespVO;
+import com.lopy.common.vo.order.OrderVO;
 import com.lopy.service.biz.intf.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +21,31 @@ public class OrderController {
     @Autowired
     private OrderService ordersService;
 
-    @PostMapping("/list")
-    public RespVO<Void> list(){
-        return RespVO.ok();
+    /**
+     * Returns page of current order & history order of current user.
+     * @param orderDTO: query params
+     * @return Order List in Pagination
+     */
+    @PostMapping("/page")
+    public RespVO<PageResult<OrderVO>> page(@RequestBody OrderDTO orderDTO) {
+        orderDTO.setUserId(AuthContext.getUserId());
+        orderDTO.setUserId(1L);
+        PageResult<OrderVO> page = ordersService.pageByQuery(orderDTO);
+        return RespVO.ok(page);
     }
 
+    /**
+     * Returns list of current order & history order of current user.
+     * @param orderDTO: query params
+     * @return Order List
+     */
+    @PostMapping("/list")
+    public RespVO<List<OrderVO>> list(@RequestBody OrderDTO orderDTO) {
+        orderDTO.setUserId(AuthContext.getUserId());
+        orderDTO.setUserId(1L);
+        List<OrderVO> list = ordersService.listByQuery(orderDTO);
+        return RespVO.ok(list);
+    }
 
     @PutMapping("/save")
     public RespVO<Void> save(@RequestBody OrderDTO orderDTO){

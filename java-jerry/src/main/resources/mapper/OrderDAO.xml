@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lopy.dao.OrderDAO">
+
+    <sql id="orderQueryWhere">
+        <if test="query.restaurantName != null and query.restaurantName != ''">
+            and r.name like concat('%', #{query.name}, '%')
+        </if>
+
+        <if test="query.userId != null">
+            and o.user_id = #{query.userId}
+        </if>
+
+        <if test="query.startDate != null and query.startDate != ''">
+            and o.modify_date &gt;= #{query.startDate}
+        </if>
+
+        <if test="query.endDate != null and query.endDate != ''">
+            and o.modify_date &lt;= #{query.startDate}
+        </if>
+    </sql>
+
+    <select id="selectByPageAndQuery" resultType="com.lopy.entity.Order">
+        select  o.id,
+                r.id restaurant_id,
+                r.name restaurant_name,
+                o.status,
+                o.total_cost,
+                o.taxes,
+                o.discounts,
+                o.modify_date
+        from c_order o left join c_restaurant r
+        on o.restaurant_id = r.id
+        <where>
+            <include refid="orderQueryWhere"></include>
+        </where>
+    </select>
+    
+    <select id="selectByQuery" resultType="com.lopy.entity.Order">
+        select  o.id,
+                r.id restaurant_id,
+                r.name restaurant_name,
+                o.status,
+                o.total_cost,
+                o.taxes,
+                o.discounts,
+                o.modify_date
+        from c_order o left join c_restaurant r
+        on o.restaurant_id = r.id
+        <where>
+            <include refid="orderQueryWhere"></include>
+        </where>
+    </select>
+</mapper>

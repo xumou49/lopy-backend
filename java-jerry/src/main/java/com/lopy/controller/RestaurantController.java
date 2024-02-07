@@ -21,12 +21,22 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
+    /**
+     * Returns page of available restaurants in the system.
+     * @param restaurantDTO: query params
+     * @return Restaurant List in Pagination
+     */
     @PostMapping("/page")
     public RespVO<PageResult<RestaurantVO>> page(@RequestBody RestaurantDTO restaurantDTO) {
         PageResult<RestaurantVO> page = restaurantService.pageByQuery(restaurantDTO);
         return RespVO.ok(page);
     }
 
+    /**
+     * Returns list of available restaurants in the system
+     * @param restaurantDTO: query params
+     * @return Restaurant List
+     */
     @PostMapping("/list")
     public RespVO<List<RestaurantVO>> list(@RequestBody RestaurantDTO restaurantDTO) {
         List<RestaurantVO> list = restaurantService.listByQuery(restaurantDTO);

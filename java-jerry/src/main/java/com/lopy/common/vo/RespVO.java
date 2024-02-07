@@ -27,12 +27,6 @@ public class RespVO<T> {
         return respVO;
     }
 
-    public static RespVO<Void> ok(String msg) {
-        RespVO<Void> respVO = new RespVO<>();
-        respVO.setMsg(msg);
-        return respVO;
-    }
-
     public static <T> RespVO<T> ok(T data) {
         RespVO<T> respVO = new RespVO<>();
         respVO.setData(data);

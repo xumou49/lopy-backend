@@ -2,6 +2,8 @@ package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.restaurant.RestaurantDTO;
+import com.lopy.common.pagination.PageResult;
+import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.vo.RespVO;
 import com.lopy.common.vo.restaurant.RestaurantVO;
 import com.lopy.service.biz.intf.RestaurantService;
@@ -19,6 +21,12 @@ public class RestaurantController {
 
     @Autowired
     private RestaurantService restaurantService;
+
+    @PostMapping("/page")
+    public RespVO<PageResult<RestaurantVO>> page(@RequestBody SearchPage searchPage) {
+        PageResult<RestaurantVO> page = restaurantService.pageByQuery(searchPage);
+        return RespVO.ok(page);
+    }
 
     @PostMapping("/list")
     public RespVO<List<RestaurantVO>> list(@RequestBody RestaurantDTO restaurantDTO) {

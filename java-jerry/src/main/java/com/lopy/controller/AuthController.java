@@ -20,19 +20,19 @@ public class AuthController {
     private AuthService authServiceImpl;
 
     @PostMapping("/login/phone")
-    public RespVO<Void> phoneLogin(@RequestBody LoginDTO loginDTO) {
+    public RespVO<String> phoneLogin(@RequestBody LoginDTO loginDTO) {
         String token = authServiceImpl.phoneLogin(loginDTO);
         return RespVO.ok(token);
     }
 
     @PostMapping("/login/google")
-    public RespVO<Void> googleLogin(@RequestBody LoginDTO loginDTO) {
+    public RespVO<String> googleLogin(@RequestBody LoginDTO loginDTO) {
         String token = authServiceImpl.googleLogin(loginDTO);
         return RespVO.ok(token);
     }
 
     @PostMapping("/login/apple")
-    public RespVO<Void> appleLogin(@RequestBody LoginDTO loginDTO) {
+    public RespVO<String> appleLogin(@RequestBody LoginDTO loginDTO) {
         String token = authServiceImpl.appleLogin(loginDTO);
         return RespVO.ok(token);
     }

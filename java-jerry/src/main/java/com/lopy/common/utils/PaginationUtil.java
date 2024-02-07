@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 
 @Slf4j
 public class PaginationUtil {
@@ -35,15 +36,13 @@ public class PaginationUtil {
      * @author Dex
      * @date 2023/09/21
      */
-    public static <T, S> PageResult<S> changePageResult(PageResult<T> data, Class<S> clz) {
+    public static <T, S> PageResult<S> changePageResult(PageResult<T> data, Function<T, S> converterFunc) {
         PageResult<S> result = new PageResult<>();
         BeanUtils.copyProperties(data, result, "content");
         List<S> content = new LinkedList<>();
         data.getContent().forEach(item -> {
             try {
-                S s = clz.getDeclaredConstructor().newInstance();
-                BeanUtils.copyProperties(item, s);
-                content.add(s);
+                content.add(converterFunc.apply(item));
             } catch (Exception e) {
                 log.error(e.getMessage());
             }

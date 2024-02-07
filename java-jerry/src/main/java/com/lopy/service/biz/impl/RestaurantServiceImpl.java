@@ -1,10 +1,13 @@
 package com.lopy.service.biz.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lopy.common.dto.restaurant.RestaurantDTO;
+import com.lopy.common.pagination.PageResult;
 import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.query.RestaurantQuery;
 import com.lopy.common.utils.DateUtil;
+import com.lopy.common.utils.PaginationUtil;
 import com.lopy.common.vo.restaurant.RestaurantVO;
 import com.lopy.dao.RestaurantDAO;
 import com.lopy.entity.Restaurant;
@@ -50,17 +53,17 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
         return baseMapper.selectByQuery(restaurantQuery).stream().map(this::toRestaurantVO).collect(Collectors.toList());
     }
 
+    public PageResult<RestaurantVO> pageByQuery(SearchPage searchPage) {
+        RestaurantQuery restaurantQuery = new RestaurantQuery();
+        restaurantQuery.setName(searchPage.getKeyword());
+        // query with pagination
+        Page<Restaurant> page = new Page<>(searchPage.getPage(), searchPage.getPageSize());
+        PageResult<Restaurant> pageResult = PaginationUtil.buildPageResult(baseMapper.selectByPageAndQuery(page, restaurantQuery), searchPage);
+        return PaginationUtil.changePageResult(pageResult, this::toRestaurantVO);
+    }
+
     @Override
     public RestaurantVO getById(Long id) {
         return toRestaurantVO(super.getById(id));
     }
-
-    // private List<RestaurantVO> paginationSearchDemo(SearchPage searchPage) {
-    //     RestaurantQuery restaurantQuery = new RestaurantQuery();
-    //     restaurantQuery.setName(searchPage.getKeyword());
-    //     // query with pagination
-    //     Page<Restaurant> page = new Page<>(searchPage.getPage(), searchPage.getPageSize());
-    //     PageResult<Restaurant> pageResult = PaginationUtil.buildPageResult(baseMapper.selectByQuery(page, restaurantQuery), searchPage);
-    //     return pageResult.getContent().stream().map(this::toRestaurantVO).collect(Collectors.toList());
-    // }
 }

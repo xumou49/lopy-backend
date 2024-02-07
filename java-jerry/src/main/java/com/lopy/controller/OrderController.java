@@ -29,7 +29,6 @@ public class OrderController {
     @PostMapping("/page")
     public RespVO<PageResult<OrderVO>> page(@RequestBody OrderDTO orderDTO) {
         orderDTO.setUserId(AuthContext.getUserId());
-        orderDTO.setUserId(1L);
         PageResult<OrderVO> page = ordersService.pageByQuery(orderDTO);
         return RespVO.ok(page);
     }
@@ -42,7 +41,6 @@ public class OrderController {
     @PostMapping("/list")
     public RespVO<List<OrderVO>> list(@RequestBody OrderDTO orderDTO) {
         orderDTO.setUserId(AuthContext.getUserId());
-        orderDTO.setUserId(1L);
         List<OrderVO> list = ordersService.listByQuery(orderDTO);
         return RespVO.ok(list);
     }

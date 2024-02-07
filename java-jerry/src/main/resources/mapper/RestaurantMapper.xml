@@ -14,7 +14,7 @@
         order by promotion.discount
     </select>
     
-    <sql id="restaurantQuerySelect">
+    <sql id="restaurantQueryWhere">
         <if test="query.name != null and query.name != ''">
             and name like concat('%', #{query.name}, '%')
         </if>
@@ -28,7 +28,7 @@
         select restaurant.*
         from c_restaurant restaurant
         <where>
-            <include refid="restaurantQuerySelect"></include>
+            <include refid="restaurantQueryWhere"></include>
         </where>
     </select>
     
@@ -36,7 +36,7 @@
         select restaurant.*
         from c_restaurant restaurant
         <where>
-            <include refid="restaurantQuerySelect"></include>
+            <include refid="restaurantQueryWhere"></include>
         </where> 
     </select>
 </mapper>

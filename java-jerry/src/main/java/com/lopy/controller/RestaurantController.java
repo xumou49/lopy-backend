@@ -3,7 +3,6 @@ package com.lopy.controller;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.restaurant.RestaurantDTO;
 import com.lopy.common.pagination.PageResult;
-import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.vo.RespVO;
 import com.lopy.common.vo.restaurant.RestaurantVO;
 import com.lopy.service.biz.intf.RestaurantService;
@@ -23,8 +22,8 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @PostMapping("/page")
-    public RespVO<PageResult<RestaurantVO>> page(@RequestBody SearchPage searchPage) {
-        PageResult<RestaurantVO> page = restaurantService.pageByQuery(searchPage);
+    public RespVO<PageResult<RestaurantVO>> page(@RequestBody RestaurantDTO restaurantDTO) {
+        PageResult<RestaurantVO> page = restaurantService.pageByQuery(restaurantDTO);
         return RespVO.ok(page);
     }
 

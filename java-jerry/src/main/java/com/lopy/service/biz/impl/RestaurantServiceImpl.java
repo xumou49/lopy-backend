@@ -53,9 +53,9 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
         return baseMapper.selectByQuery(restaurantQuery).stream().map(this::toRestaurantVO).collect(Collectors.toList());
     }
 
-    public PageResult<RestaurantVO> pageByQuery(SearchPage searchPage) {
-        RestaurantQuery restaurantQuery = new RestaurantQuery();
-        restaurantQuery.setName(searchPage.getKeyword());
+    public PageResult<RestaurantVO> pageByQuery(RestaurantDTO restaurantDTO) {
+        SearchPage searchPage = restaurantDTO.getSearchPage();
+        RestaurantQuery restaurantQuery = RestaurantQuery.build(restaurantDTO);
         // query with pagination
         Page<Restaurant> page = new Page<>(searchPage.getPage(), searchPage.getPageSize());
         PageResult<Restaurant> pageResult = PaginationUtil.buildPageResult(baseMapper.selectByPageAndQuery(page, restaurantQuery), searchPage);

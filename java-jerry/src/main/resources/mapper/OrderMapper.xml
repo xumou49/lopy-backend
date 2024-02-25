@@ -24,6 +24,7 @@
 
     <select id="selectByPageAndQuery" resultType="com.lopy.entity.Order">
         select  o.id,
+                o.uid,
                 r.id restaurant_id,
                 r.name restaurant_name,
                 o.status,
@@ -40,6 +41,7 @@
     
     <select id="selectByQuery" resultType="com.lopy.entity.Order">
         select  o.id,
+                o.uid,
                 r.id restaurant_id,
                 r.name restaurant_name,
                 o.status,

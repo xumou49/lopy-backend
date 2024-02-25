@@ -7,6 +7,7 @@ import java.util.Date;
 @Data
 public class OrderVO {
     private Long id;
+    private String uid;
     private String restaurantName;
     private Long restaurantId;
     private Integer status;

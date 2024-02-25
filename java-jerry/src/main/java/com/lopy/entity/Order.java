@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("c_order")
 public class Order extends Base {
+	private String uid;
 	private Long restaurantId;
 	private Long userId;
 	private Integer status;

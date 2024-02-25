@@ -3,6 +3,7 @@ package com.lopy.common.aspect;
 
 import com.lopy.common.exception.PermissionDeniedException;
 import com.lopy.common.exception.ServiceException;
+import com.lopy.common.exception.ValidationException;
 import com.lopy.common.utils.ExceptionUtil;
 import com.lopy.common.utils.MessageUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -10,8 +11,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
-
-import javax.validation.ValidationException;
 
 @Slf4j
 @Component
@@ -27,7 +26,8 @@ public class ServiceAspect {
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
             return joinPoint.proceed();
-        } catch (ValidationException | ServiceException | PermissionDeniedException e) {
+        }
+        catch (ValidationException | ServiceException | PermissionDeniedException e) {
             logErrorMessage(joinPoint, e);
             throw e;
         } catch (Throwable e) {

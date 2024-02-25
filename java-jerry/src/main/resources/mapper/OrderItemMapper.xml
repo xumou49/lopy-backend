@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lopy.dao.OrderItemDAO">
+
+    <sql id="orderQueryWhere">
+        <if test="query.orderId != null">
+            and oi.order_id = #{query.orderId}
+        </if>
+    </sql>
+
+    <select id="selectByPageAndQuery" resultType="com.lopy.entity.OrderItem">
+        select *
+        from c_order_item oi
+        <where>
+            <include refid="orderQueryWhere"></include>
+        </where>
+    </select>
+    
+    <select id="selectByQuery" resultType="com.lopy.entity.OrderItem">
+        select *
+        from c_order_item oi
+        <where>
+            <include refid="orderQueryWhere"></include>
+        </where>
+    </select>
+</mapper>

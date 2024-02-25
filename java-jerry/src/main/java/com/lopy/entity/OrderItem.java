@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 public class OrderItem extends Base {
 
 	private Long orderId;
+	private String itemName;
 	private Integer quantity;
 	private Double itemPrice;
-
 }

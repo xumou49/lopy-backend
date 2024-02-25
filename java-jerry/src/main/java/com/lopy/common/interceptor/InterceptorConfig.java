@@ -25,16 +25,14 @@ public class InterceptorConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // registry.addInterceptor(authInterceptor)
-        //         .addPathPatterns("/**")
-        //         // auth api
-        //         .excludePathPatterns("/api/v1/auth/**", "/api/v1/demo/**")
-        //         // favicon.ico
-        //         .excludePathPatterns("/favicon.ico")
-        //         // res
-        //         .excludePathPatterns("/api/v1/restaurant/**")
-        //         // swagger api
-        //         .excludePathPatterns(getSwaggerUris());
+        registry.addInterceptor(authInterceptor)
+                .addPathPatterns("/**")
+                // auth api
+                .excludePathPatterns("/api/v1/auth/**", "/api/v1/demo/**")
+                // favicon.ico
+                .excludePathPatterns("/favicon.ico")
+                // swagger api
+                .excludePathPatterns(getSwaggerUris());
         registry.addInterceptor(logInterceptor)
                 .addPathPatterns("/**")
                 // favicon.ico

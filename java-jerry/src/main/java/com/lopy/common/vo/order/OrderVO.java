@@ -10,6 +10,7 @@ public class OrderVO {
     private String restaurantName;
     private Long restaurantId;
     private Integer status;
+    private Double totalCost;
     private Double taxes;
     private Double discounts;
     private Date completeDate;

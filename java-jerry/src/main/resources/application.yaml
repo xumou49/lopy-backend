@@ -3,7 +3,7 @@ server:
 
 app:
   version: v1.0.0
-  image-domain: "https://api-lopy.wanioco.com"
+  image-domain: "http://api-lopy.wanioco.com"
 
 spring:
   # message

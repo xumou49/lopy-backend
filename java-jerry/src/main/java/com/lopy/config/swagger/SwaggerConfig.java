@@ -45,6 +45,7 @@ public class SwaggerConfig {
                         "/api/v1/order/**",
                         "/api/v1/order-item/**",
                         "/api/v1/cuisine/**",
+                        "/api/v1/user-card/**",
                         "/api/v1/payment/**")
                 .build();
     }

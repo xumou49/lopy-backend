@@ -37,6 +37,42 @@
         from c_restaurant restaurant
         <where>
             <include refid="restaurantQueryWhere"></include>
-        </where> 
+        </where>
     </select>
+
+    <select id="selectById" resultType="com.lopy.entity.Restaurant">
+        select restaurant.*
+        from c_restaurant restaurant
+        <where>
+            id = #{query.id}
+        </where>
+    </select>
+
+    <select id="selectCategoryByRestaurantId" resultType="com.lopy.entity.MenuCategory">
+        select mc.*
+        from c_restaurant r
+            join c_menu_category mc on r.id = mc.restaurant_id
+        <where>
+            r.id = #{query.restaurantId} and mc.status = 1
+        </where>
+    </select>
+
+    <select id="selectMenuByCategoryId" resultType="com.lopy.entity.Menu">
+        select m.*
+        from c_menu_category mc
+        join c_menu m on mc.id = m.category_id
+        <where>
+            mc.id = #{query.categoryId}
+        </where>
+    </select>
+
+    <select id="selectMenuItemByMenuId" resultType="com.lopy.entity.MenuItem">
+        select mi.*
+        from c_menu m
+        join c_menu_item mi on m.id = mi.menu_id
+        <where>
+            m.id = #{query.menuId}
+        </where>
+    </select>
+
 </mapper>

@@ -56,3 +56,7 @@ apple:
 google:
   api:
     domain: "https://www.googleapis.com"
+
+stripe:
+  STRIPE_PUBLIC_KEY: 'pk_test_51OsI31Dc9uMveIXFkmuOywG45EOtOJrUtL9OZVlZqTrygAH29rbCLJTvTqVw3ztBSC1GMQ5eawSxgrp67hZmlNM300xc8bE5T9'
+  STRIPE_SECRET_KEY: 'sk_test_51OsI31Dc9uMveIXFtN1o17ou8ah0UdhZI0HyjIUX91i4xxZd8Y07lq5IoByOtrVVfCZP7cFtPLi3fE8Zkoq44gPw00bvWKVIPY'

@@ -20,4 +20,29 @@
             <include refid="userCardQueryWhere"></include>
         </where>
     </select>
+
+    <insert id="save">
+        insert into c_user_card (stripe_id,
+                                 brand,
+                                 user_id,
+                                 funding,
+                                 last_four,
+                                 exp_month,
+                                 exp_year,
+                                 country,
+                                 cvc_check,
+                                 fingerprint,
+                                 create_date)
+        values (#{form.stripeId},
+                #{form.brand},
+                1,
+                #{form.funding},
+                #{form.lastFour},
+                #{form.expMonth},
+                #{form.expYear},
+                #{form.country},
+                #{form.cvcCheck},
+                #{form.fingerprint},
+                Now())
+    </insert>
 </mapper>

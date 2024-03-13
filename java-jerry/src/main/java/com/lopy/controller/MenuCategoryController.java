@@ -3,6 +3,7 @@ package com.lopy.controller;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.menu.MenuCategoryDTO;
 import com.lopy.common.vo.RespVO;
+import com.lopy.common.vo.restaurant.MenuCategoryVO;
 import com.lopy.service.biz.intf.MenuCategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,17 @@ public class MenuCategoryController {
 
     @Autowired
     private MenuCategoryService menuCategoryService;
-
+    
+    /**
+     * Returns list of available menu category in the system
+     *
+     * @param menuCategoryDTO: query params
+     * @return MenuCategory List
+     */
     @PostMapping("/list")
-    public RespVO<Void> list() {
-        return RespVO.ok();
+    public RespVO<List<MenuCategoryVO>> list(@RequestBody MenuCategoryDTO menuCategoryDTO) {
+        List<MenuCategoryVO> list = menuCategoryService.listByQuery(menuCategoryDTO);
+        return RespVO.ok(list);
     }
 
     @PutMapping("/save")

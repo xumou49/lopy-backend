@@ -9,13 +9,14 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("c_menu")
 public class Menu extends Base {
-	@TableId
-	private Long id;
-	private Long restaurantId;
-	private String menuName;
-	/**
-	 * status [0 -> disable；1 -> enable;]
-	 */
-	private Integer status;
+    @TableId
+    private Long id;
+    private Long restaurantId;
+    private Long categoryId;
+    private String menuName;
+    /**
+     * status [0 -> disable；1 -> enable;]
+     */
+    private Integer status;
 
 }

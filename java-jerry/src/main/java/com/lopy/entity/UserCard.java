@@ -15,7 +15,7 @@ public class UserCard {
 
     @TableId(type = IdType.AUTO)
     private Long id;
-    private String stripId;
+    private String stripeId;
     private String brand;
     private Long userId;
     private String funding;

@@ -13,5 +13,6 @@ public interface RestaurantService {
     PageResult<RestaurantVO> pageByQuery(RestaurantDTO restaurantDTO);
 
     RestaurantVO getById(Long id);
+
 }
 

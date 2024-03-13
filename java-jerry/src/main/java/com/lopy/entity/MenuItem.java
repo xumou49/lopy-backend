@@ -8,9 +8,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("c_menu_item")
 public class MenuItem extends Base {
-	private Long restaurantId;
-	private String itemName;
-	private String description;
-	private Double price;
-
+    private Long id;
+    private Long restaurantId;
+    private Long menuId;
+    private String itemName;
+    private String description;
+    private Double price;
+    private String imagePath;
 }

@@ -2,25 +2,27 @@ package com.lopy.service.biz.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.restaurant.RestaurantDTO;
 import com.lopy.common.pagination.PageResult;
 import com.lopy.common.pagination.SearchPage;
-import com.lopy.common.query.MenuCategoryQuery;
 import com.lopy.common.query.RestaurantQuery;
+import com.lopy.common.utils.CollectionUtil;
 import com.lopy.common.utils.DateUtil;
 import com.lopy.common.utils.PaginationUtil;
 import com.lopy.common.vo.restaurant.MenuCategoryVO;
 import com.lopy.common.vo.restaurant.MenuItemVO;
 import com.lopy.common.vo.restaurant.MenuVO;
 import com.lopy.common.vo.restaurant.RestaurantVO;
+import com.lopy.dao.MenuCategoryDAO;
 import com.lopy.dao.RestaurantDAO;
 import com.lopy.entity.Menu;
 import com.lopy.entity.MenuCategory;
 import com.lopy.entity.MenuItem;
 import com.lopy.entity.Restaurant;
 import com.lopy.service.biz.intf.RestaurantService;
-import lombok.extern.java.Log;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,9 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
 
     @Value("${app.image-domain}")
     private String imageDomain;
+
+    @Autowired
+    private MenuCategoryDAO menuCategoryDAO;
 
     private RestaurantVO toRestaurantVO(Restaurant restaurant) {
         RestaurantVO restaurantVO = new RestaurantVO();
@@ -104,7 +109,30 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
         }
         mc.setMenuList(menuList);
         restaurantVO.setMenuCategory(mc);
+        
+        return restaurantVO;
+    }
 
+    public RestaurantVO getByIdV2(Long id) {
+        RestaurantVO restaurantVO = toRestaurantVO(baseMapper.selectById(id));
+        List<MenuCategory> menuCategories = menuCategoryDAO.selectByRestaurantIdAndStatus(id, CommonConstant.STATUS_ENABLE);
+        if (CollectionUtil.isEmpty(menuCategories)) {
+            return restaurantVO;
+        }
+
+        // should only have one active menu category at any time
+        MenuCategory menuCategory = menuCategories.get(0);
+        MenuCategoryVO menuCategoryVO = baseMapper.selectAndBuildMenuCategoryVO(restaurantVO.getId(), menuCategory.getId());
+
+        // update the image path of menuItem
+        if (menuCategoryVO != null) {
+            List<MenuVO> menuList = menuCategoryVO.getMenuList();
+            if (CollectionUtil.isNotEmpty(menuList)) {
+                menuList.forEach(menu -> menu.getMenuItemList().forEach(item -> item.setImageUrl(imageDomain + item.getImageUrl())));
+            }
+        }
+
+        restaurantVO.setMenuCategory(menuCategoryVO);
         return restaurantVO;
     }
 }

@@ -7,11 +7,15 @@ import com.lopy.common.query.MenuCategoryQuery;
 import com.lopy.entity.MenuCategory;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
 @Mapper
 public interface MenuCategoryDAO extends BaseMapper<MenuCategory> {
+
+    @Select("select * from c_menu_category where restaurant_id = #{restaurantId} and status = #{status}")
+    List<MenuCategory> selectByRestaurantIdAndStatus(@Param("restaurantId") Long restaurantId, @Param("status") Integer status);
     
     List<MenuCategory> selectByQuery(@Param("query") MenuCategoryQuery menuCategoryQuery);
     

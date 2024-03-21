@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lopy.common.query.RestaurantQuery;
+import com.lopy.common.vo.restaurant.MenuCategoryVO;
 import com.lopy.entity.Menu;
 import com.lopy.entity.MenuCategory;
 import com.lopy.entity.MenuItem;
@@ -29,4 +30,6 @@ public interface RestaurantDAO extends BaseMapper<Restaurant> {
     List<Menu> selectMenuByCategoryId(Long categoryId);
 
     List<MenuItem> selectMenuItemByMenuId(Long menuId);
+
+    MenuCategoryVO selectAndBuildMenuCategoryVO(Long restaurantId, Long menuCategoryId);
 }

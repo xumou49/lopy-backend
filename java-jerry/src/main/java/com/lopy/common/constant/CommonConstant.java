@@ -8,6 +8,8 @@ public class CommonConstant {
 
     public static final int STATUS_SUCCESS = 200;
 
+    public static final int STATUS_ENABLE = 1;
+
     public static class API {
         private API() {}
 

@@ -4,6 +4,29 @@
 
 <mapper namespace="com.lopy.dao.RestaurantDAO">
 
+    <resultMap type="com.lopy.common.vo.restaurant.MenuCategoryVO" id="menuCategoryResultMap">
+        <result property="id" column="mc_id"/>
+        <result property="restaurantId" column="mc_restaurant_id"/>
+        <result property="categoryName" column="mc_category_name"/>
+        <result property="status" column="mc_status"/>
+        <collection property="menuList" ofType="com.lopy.common.vo.restaurant.MenuVO">
+            <id property="id" column="m_id" />
+            <result property="restaurantId" column="m_restaurant_id" />
+            <result property="categoryId" column="m_category_id" />
+            <result property="menuName" column="m_menu_name" />
+            <result property="status" column="m_status" />
+            <collection property="menuItemList" ofType="com.lopy.common.vo.restaurant.MenuItemVO">
+                <id property="id" column="mi_id"/>
+                <result property="restaurantId" column="mi_restaurant_id"/>
+                <result property="menuId" column="mi_menu_id"/>
+                <result property="itemName" column="mi_item_name"/>
+                <result property="description" column="mi_description"/>
+                <result property="price" column="mi_price"/>
+                <result property="imageUrl" column="mi_image_path"/>
+            </collection>
+        </collection>
+    </resultMap>
+
     <select id="selectByPromotion" resultType="com.lopy.entity.Restaurant">
         select restaurant.* from c_restaurant restaurant
         inner join c_restaurant_promotion restaurant_promotion on restaurant.id = restaurant_promotion.restaurant_id
@@ -73,6 +96,28 @@
         <where>
             m.id = #{query.menuId}
         </where>
+    </select>
+
+    <select id="selectAndBuildMenuCategoryVO" resultMap="menuCategoryResultMap">
+        select mc.id mc_id,
+               mc.restaurant_id mc_restaurant_id,
+               mc.category_name mc_category_name,
+               mc.status mc_status,
+               m.id m_id,
+               m.restaurant_id m_restaurant_id,
+               m.category_id m_category_id,
+               m.menu_name m_menu_name,
+               m.status m_status,
+               mi.id mi_id,
+               mi.restaurant_id mi_restaurant_id,
+               mi.menu_id mi_menu_id,
+               mi.item_name mi_item_name,
+               mi.description mi_description,
+               mi.price mi_price,
+               mi.image_path mi_image_path
+        from c_menu_category mc inner join
+        c_menu m on mc.id = m.category_id and mc.restaurant_id = #{restaurantId} and mc.id = #{menuCategoryId}
+        inner join c_menu_item mi on m.id = mi.menu_id
     </select>
 
 </mapper>

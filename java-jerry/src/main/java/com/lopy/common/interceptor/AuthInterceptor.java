@@ -1,8 +1,13 @@
 package com.lopy.common.interceptor;
 
 import com.lopy.common.constant.AuthConstant;
+import com.lopy.common.exception.PermissionDeniedException;
+import com.lopy.common.pojo.JWTPayload;
+import com.lopy.common.utils.JWTUtil;
+import com.lopy.common.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.annotation.PostConstruct;
@@ -32,28 +37,30 @@ public class AuthInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String requestURI = request.getRequestURI();
         log.info("In session pre handler ...");
-        log.info("request uri: {}", request.getRequestURI());
+        log.info("request uri: {}", requestURI);
 
-        // AntPathMatcher pathMatcher = new AntPathMatcher();
+        AntPathMatcher pathMatcher = new AntPathMatcher();
+
         // check if user is logged in
-        // String token = request.getHeader(AuthConstant.CURRENT_AUTH_TOKEN_HEADER);
-        // if (StringUtil.isBlank(token)) {
-        //     // TODO
-        //     throw new PermissionDeniedException("error");
-        // }
-        //
-        // JWTPayload payload = JWTUtil.verifyToken(token);
-        // log.info("payload: {}", payload);
-        // if (payload == null) {
-        //     // TODO
-        //     throw new PermissionDeniedException("error");
-        // }
+        String token = request.getHeader(AuthConstant.CURRENT_AUTH_TOKEN_HEADER);
+        if (StringUtil.isBlank(token)) {
+            // TODO
+            throw new PermissionDeniedException("error");
+        }
+
+        JWTPayload payload = JWTUtil.verifyToken(token);
+        log.info("payload: {}", payload);
+        if (payload == null) {
+            // TODO
+            throw new PermissionDeniedException("error");
+        }
 
         // take the id from request header for now (todo, will change in the later stage)
-        // request.setAttribute(AuthConstant.CURRENT_USER_HEADER, payload.getUserId());
-        request.setAttribute(AuthConstant.CURRENT_USER_HEADER, request.getHeader(AuthConstant.CURRENT_USER_HEADER));
-        // request.setAttribute(AuthConstant.CURRENT_USER_TYPE_HEADER, payload.getUserType());
+        request.setAttribute(AuthConstant.CURRENT_USER_HEADER, payload.getUserId());
+        request.setAttribute(AuthConstant.CURRENT_USER_TYPE_HEADER, payload.getUserType());
+        // request.setAttribute(AuthConstant.CURRENT_USER_HEADER, "1");
         return true;
     }
 

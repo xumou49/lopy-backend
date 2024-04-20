@@ -43,7 +43,7 @@ public class OrderItemController {
      * @return Order Item List
      */
     @PostMapping("/list")
-    public RespVO<List<OrderItemVO>> list(OrderItemDTO orderItemDTO){
+    public RespVO<List<OrderItemVO>> list(@RequestBody OrderItemDTO orderItemDTO){
         orderValidationService.orderOperateChecker(orderItemDTO.getOrderId(), AuthContext.getUserId());
         List<OrderItemVO> list = orderItemService.listByQuery(orderItemDTO);
         return RespVO.ok(list);

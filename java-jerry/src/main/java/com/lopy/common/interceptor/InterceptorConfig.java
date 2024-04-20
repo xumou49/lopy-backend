@@ -29,6 +29,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 // auth api
                 .excludePathPatterns("/api/v1/auth/**", "/api/v1/demo/**")
+                // restaurant api
+                .excludePathPatterns("/api/v1/restaurant/**")
                 // favicon.ico
                 .excludePathPatterns("/favicon.ico")
                 // swagger api

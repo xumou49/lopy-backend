@@ -8,7 +8,6 @@ import com.lopy.common.query.UserCardQuery;
 import com.lopy.common.vo.card.UserCardVO;
 import com.lopy.dao.UserCardDAO;
 import com.lopy.entity.UserCard;
-import com.lopy.service.biz.intf.AuthService;
 import com.lopy.service.biz.intf.UserCardService;
 import com.lopy.service.stripe.StripeServiceImpl;
 import org.springframework.beans.BeanUtils;

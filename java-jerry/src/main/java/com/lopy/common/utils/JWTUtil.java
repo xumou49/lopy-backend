@@ -20,7 +20,7 @@ public class JWTUtil {
     /**
      * expiration in 1 day
      */
-    private static final long EXPIRE_TIME = 60 * 24 * 1000L;
+    private static final long EXPIRE_TIME = 60 * 60 * 24 * 1000;
 
     /**
      * signing secret
@@ -52,8 +52,8 @@ public class JWTUtil {
             Algorithm algorithm = Algorithm.HMAC256(TOKEN_SECRET);
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
-            String userId = jwt.getClaim("userId").asString();
-            String userType = jwt.getClaim("userType").asString();
+            String userId = jwt.getClaim("id").asString();
+            String userType = jwt.getClaim("type").asString();
             return new JWTPayload(DataUtil.toLong(userId), userType);
         } catch (Exception e){
             log.error("JWTUtil invokes verifyToken error: {}", e.getMessage());

@@ -51,7 +51,7 @@ public class OrderController {
      * @param orderDTO: query params
      * @return Order List
      */
-    @PostMapping("/save")
+    @PutMapping("/save")
     public RespVO<Void> save(@RequestBody OrderDTO orderDTO) {
         orderDTO.setUserId(AuthContext.getUserId());
         ordersService.createOrder(orderDTO);

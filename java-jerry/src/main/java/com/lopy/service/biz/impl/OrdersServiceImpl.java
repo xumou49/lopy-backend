@@ -65,7 +65,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrderDAO, Order> implements O
         order.setUserId(orderDTO.getUserId());
         baseMapper.insert(order);
         // bind the order item to order & save order items
-        List<OrderItem> orderItems = orderDTO.getItemList().stream().map(o -> new OrderItem(order.getId(), o.getItemName(), o.getQuantity(), o.getItemPrice())).collect(Collectors.toList());
+        List<OrderItem> orderItems = orderDTO.getItemList().stream().map(o -> new OrderItem(order.getId(), o.getName(), o.getQuantity(), o.getPrice())).collect(Collectors.toList());
         orderItemDAO.batchInsert(orderItems);
     }
 }

@@ -13,6 +13,6 @@ public class OrderDTO {
     private List<OrderItemDTO> itemList = new ArrayList<>();
 
     public double getTotalCost() {
-        return itemList.stream().mapToDouble(o -> o.getItemPrice() * o.getQuantity()).sum();
+        return itemList.stream().mapToDouble(o -> o.getPrice() * o.getQuantity()).sum();
     }
 }

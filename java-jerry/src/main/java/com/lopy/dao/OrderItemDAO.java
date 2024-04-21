@@ -13,6 +13,8 @@ import java.util.List;
 @Mapper
 public interface OrderItemDAO extends BaseMapper<OrderItem> {
 
+    void batchInsert(@Param("list") List<OrderItem> list);
+
     List<OrderItem> selectByQuery(@Param("query") OrderItemQuery orderItemQuery);
 
     IPage<OrderItem> selectByPageAndQuery(@Param("page") Page<OrderItem> page, @Param("query") OrderItemQuery orderItemQuery);

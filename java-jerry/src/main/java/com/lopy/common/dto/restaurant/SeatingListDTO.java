@@ -3,5 +3,5 @@ package com.lopy.common.dto.restaurant;
 import lombok.Data;
 
 @Data
-public class SeatingDTO {
+public class SeatingListDTO {
 }

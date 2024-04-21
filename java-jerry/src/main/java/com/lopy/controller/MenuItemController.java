@@ -1,7 +1,7 @@
 package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
-import com.lopy.common.dto.menu.MenuItemDTO;
+import com.lopy.common.dto.menu.MenuItemListDTO;
 import com.lopy.common.vo.RespVO;
 import com.lopy.entity.MenuItem;
 import com.lopy.service.biz.intf.MenuItemService;
@@ -25,7 +25,7 @@ public class MenuItemController {
     }
 
     @PutMapping("/save")
-    public RespVO<Void> save(@RequestBody MenuItemDTO menuItemDTO){
+    public RespVO<Void> save(@RequestBody MenuItemListDTO menuItemListDTO){
         return RespVO.ok();
     }
 

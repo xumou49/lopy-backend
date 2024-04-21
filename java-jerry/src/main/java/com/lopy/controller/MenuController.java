@@ -1,7 +1,7 @@
 package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
-import com.lopy.common.dto.menu.MenuDTO;
+import com.lopy.common.dto.menu.MenuListDTO;
 import com.lopy.common.vo.RespVO;
 import com.lopy.service.biz.intf.MenuService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,12 +23,12 @@ public class MenuController {
     }
 
     @PutMapping("/save")
-    public RespVO<Void> save(@RequestBody MenuDTO menuDTO) {
+    public RespVO<Void> save(@RequestBody MenuListDTO menuListDTO) {
         return RespVO.ok();
     }
 
     @PutMapping("/update")
-    public RespVO<Void> update(@RequestBody MenuDTO menuDTO) {
+    public RespVO<Void> update(@RequestBody MenuListDTO menuListDTO) {
         return RespVO.ok();
     }
 

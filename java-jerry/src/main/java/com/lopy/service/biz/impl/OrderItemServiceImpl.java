@@ -2,7 +2,7 @@ package com.lopy.service.biz.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lopy.common.dto.order.OrderItemDTO;
+import com.lopy.common.dto.order.OrderItemListDTO;
 import com.lopy.common.pagination.PageResult;
 import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.query.OrderItemQuery;
@@ -28,15 +28,15 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemDAO, OrderItem> i
     }
 
     @Override
-    public List<OrderItemVO> listByQuery(OrderItemDTO orderItemDTO) {
-        OrderItemQuery orderItemQuery = OrderItemQuery.build(orderItemDTO);
+    public List<OrderItemVO> listByQuery(OrderItemListDTO orderItemListDTO) {
+        OrderItemQuery orderItemQuery = OrderItemQuery.build(orderItemListDTO);
         return baseMapper.selectByQuery(orderItemQuery).stream().map(this::toOrderItemVO).collect(Collectors.toList());
     }
 
     @Override
-    public PageResult<OrderItemVO> pageByQuery(OrderItemDTO orderItemDTO) {
-        OrderItemQuery orderItemQuery = OrderItemQuery.build(orderItemDTO);
-        SearchPage searchPage = orderItemDTO.getSearchPage();
+    public PageResult<OrderItemVO> pageByQuery(OrderItemListDTO orderItemListDTO) {
+        OrderItemQuery orderItemQuery = OrderItemQuery.build(orderItemListDTO);
+        SearchPage searchPage = orderItemListDTO.getSearchPage();
         // query with pagination
         Page<OrderItem> page = new Page<>(searchPage.getPage(), searchPage.getPageSize());
         PageResult<OrderItem> pageResult = PaginationUtil.buildPageResult(baseMapper.selectByPageAndQuery(page, orderItemQuery), searchPage);

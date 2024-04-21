@@ -1,10 +1,10 @@
 package com.lopy.common.dto.order;
 
-import com.lopy.common.pagination.SearchPage;
 import lombok.Data;
 
 @Data
 public class OrderItemDTO {
-    private Long orderId;
-    private SearchPage searchPage = new SearchPage();
+    private String itemName;
+    private Integer quantity;
+    private Double itemPrice;
 }

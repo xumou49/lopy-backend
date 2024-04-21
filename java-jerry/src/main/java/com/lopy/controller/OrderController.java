@@ -3,6 +3,7 @@ package com.lopy.controller;
 import com.lopy.common.auth.AuthContext;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.order.OrderDTO;
+import com.lopy.common.dto.order.OrderListDTO;
 import com.lopy.common.pagination.PageResult;
 import com.lopy.common.vo.RespVO;
 import com.lopy.common.vo.order.OrderVO;
@@ -23,14 +24,26 @@ public class OrderController {
 
     /**
      * Returns page of current order & history order of current user.
-     * @param orderDTO: query params
+     * @param orderListDTO: query params
      * @return Order List in Pagination
      */
     @PostMapping("/page")
-    public RespVO<PageResult<OrderVO>> page(@RequestBody OrderDTO orderDTO) {
-        orderDTO.setUserId(AuthContext.getUserId());
-        PageResult<OrderVO> page = ordersService.pageByQuery(orderDTO);
+    public RespVO<PageResult<OrderVO>> page(@RequestBody OrderListDTO orderListDTO) {
+        orderListDTO.setUserId(AuthContext.getUserId());
+        PageResult<OrderVO> page = ordersService.pageByQuery(orderListDTO);
         return RespVO.ok(page);
+    }
+
+    /**
+     * Returns list of current order & history order of current user.
+     * @param orderListDTO: query params
+     * @return Order List
+     */
+    @PostMapping("/list")
+    public RespVO<List<OrderVO>> list(@RequestBody OrderListDTO orderListDTO) {
+        orderListDTO.setUserId(AuthContext.getUserId());
+        List<OrderVO> list = ordersService.listByQuery(orderListDTO);
+        return RespVO.ok(list);
     }
 
     /**
@@ -38,20 +51,15 @@ public class OrderController {
      * @param orderDTO: query params
      * @return Order List
      */
-    @PostMapping("/list")
-    public RespVO<List<OrderVO>> list(@RequestBody OrderDTO orderDTO) {
+    @PostMapping("/save")
+    public RespVO<Void> save(@RequestBody OrderDTO orderDTO) {
         orderDTO.setUserId(AuthContext.getUserId());
-        List<OrderVO> list = ordersService.listByQuery(orderDTO);
-        return RespVO.ok(list);
-    }
-
-    @PutMapping("/save")
-    public RespVO<Void> save(@RequestBody OrderDTO orderDTO){
+        ordersService.createOrder(orderDTO);
         return RespVO.ok();
     }
 
     @PutMapping("/update")
-    public RespVO<Void> update(@RequestBody OrderDTO orderDTO) {
+    public RespVO<Void> update(@RequestBody OrderListDTO orderListDTO) {
         return RespVO.ok();
     }
 

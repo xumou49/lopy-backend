@@ -1,11 +1,10 @@
-package com.lopy.common.dto.menu;
+package com.lopy.common.dto.order;
 
 import com.lopy.common.pagination.SearchPage;
 import lombok.Data;
 
 @Data
-public class MenuCategoryDTO {
-    
-    private Long restaurantId;
+public class OrderItemListDTO {
+    private Long orderId;
     private SearchPage searchPage = new SearchPage();
 }

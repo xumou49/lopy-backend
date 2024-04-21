@@ -1,6 +1,6 @@
 package com.lopy.common.query;
 
-import com.lopy.common.dto.card.UserCardDTO;
+import com.lopy.common.dto.card.UserCardListDTO;
 import lombok.Data;
 
 @Data
@@ -9,10 +9,10 @@ public class UserCardQuery {
     private String brand;
     private Long userId;
 
-    public static UserCardQuery build(UserCardDTO userCardDTO) {
+    public static UserCardQuery build(UserCardListDTO userCardListDTO) {
         UserCardQuery userCardQuery = new UserCardQuery();
-        userCardQuery.setUserId(userCardDTO.getUserId());
-        userCardQuery.setBrand(userCardDTO.getBrand());
+        userCardQuery.setUserId(userCardListDTO.getUserId());
+        userCardQuery.setBrand(userCardListDTO.getBrand());
         return userCardQuery;
     }
 }

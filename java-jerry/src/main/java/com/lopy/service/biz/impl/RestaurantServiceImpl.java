@@ -3,7 +3,7 @@ package com.lopy.service.biz.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lopy.common.constant.CommonConstant;
-import com.lopy.common.dto.restaurant.RestaurantDTO;
+import com.lopy.common.dto.restaurant.RestaurantListDTO;
 import com.lopy.common.pagination.PageResult;
 import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.query.RestaurantQuery;
@@ -67,9 +67,9 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
     }
 
     @Override
-    public List<RestaurantVO> listByQuery(RestaurantDTO restaurantDTO) {
+    public List<RestaurantVO> listByQuery(RestaurantListDTO restaurantListDTO) {
         // if search for restaurant with promotion, find those which has promotion within today
-        if (restaurantDTO.getPromotionSearch()) {
+        if (restaurantListDTO.getPromotionSearch()) {
             LocalDateTime now = LocalDateTime.now();
             String startDate = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 0, 0).format(DateTimeFormatter.ofPattern(DateUtil.DATE_TIME));
             String endDate = LocalDateTime.of(now.getYear(), now.getMonth(), now.getDayOfMonth(), 23, 59).format(DateTimeFormatter.ofPattern(DateUtil.DATE_TIME));
@@ -78,16 +78,16 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
         }
 
         // search restaurant with high highest rank (todo)
-        SearchPage searchPage = restaurantDTO.getSearchPage();
+        SearchPage searchPage = restaurantListDTO.getSearchPage();
         RestaurantQuery restaurantQuery = new RestaurantQuery();
         restaurantQuery.setName(searchPage.getKeyword());
-        restaurantQuery.setCuisine(restaurantDTO.getCuisine());
+        restaurantQuery.setCuisine(restaurantListDTO.getCuisine());
         return baseMapper.selectByQuery(restaurantQuery).stream().map(this::toRestaurantVO).collect(Collectors.toList());
     }
 
-    public PageResult<RestaurantVO> pageByQuery(RestaurantDTO restaurantDTO) {
-        SearchPage searchPage = restaurantDTO.getSearchPage();
-        RestaurantQuery restaurantQuery = RestaurantQuery.build(restaurantDTO);
+    public PageResult<RestaurantVO> pageByQuery(RestaurantListDTO restaurantListDTO) {
+        SearchPage searchPage = restaurantListDTO.getSearchPage();
+        RestaurantQuery restaurantQuery = RestaurantQuery.build(restaurantListDTO);
         // query with pagination
         Page<Restaurant> page = new Page<>(searchPage.getPage(), searchPage.getPageSize());
         PageResult<Restaurant> pageResult = PaginationUtil.buildPageResult(baseMapper.selectByPageAndQuery(page, restaurantQuery), searchPage);

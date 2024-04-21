@@ -2,7 +2,7 @@ package com.lopy.service.biz.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lopy.common.auth.AuthContext;
-import com.lopy.common.dto.card.UserCardDTO;
+import com.lopy.common.dto.card.UserCardListDTO;
 import com.lopy.common.form.card.UserCardForm;
 import com.lopy.common.query.UserCardQuery;
 import com.lopy.common.vo.card.UserCardVO;
@@ -32,8 +32,8 @@ public class UserCardServiceImpl extends ServiceImpl<UserCardDAO, UserCard> impl
     }
 
     @Override
-    public List<UserCardVO> listByQuery(UserCardDTO userCardDTO) {
-        UserCardQuery userCardQuery = UserCardQuery.build(userCardDTO);
+    public List<UserCardVO> listByQuery(UserCardListDTO userCardListDTO) {
+        UserCardQuery userCardQuery = UserCardQuery.build(userCardListDTO);
         return baseMapper.selectByQuery(userCardQuery).stream().map(this::toUserCardVO).collect(Collectors.toList());
     }
 

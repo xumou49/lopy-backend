@@ -2,23 +2,33 @@ package com.lopy.service.biz.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.order.OrderDTO;
+import com.lopy.common.dto.order.OrderListDTO;
 import com.lopy.common.pagination.PageResult;
 import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.query.OrderQuery;
 import com.lopy.common.utils.PaginationUtil;
 import com.lopy.common.vo.order.OrderVO;
 import com.lopy.dao.OrderDAO;
+import com.lopy.dao.OrderItemDAO;
 import com.lopy.entity.Order;
+import com.lopy.entity.OrderItem;
 import com.lopy.service.biz.intf.OrderService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service("ordersService")
 public class OrdersServiceImpl extends ServiceImpl<OrderDAO, Order> implements OrderService {
+
+    @Autowired
+    private OrderItemDAO orderItemDAO;
 
     private OrderVO toOrderVO(Order order) {
         OrderVO orderVO = new OrderVO();
@@ -28,18 +38,34 @@ public class OrdersServiceImpl extends ServiceImpl<OrderDAO, Order> implements O
     }
 
     @Override
-    public List<OrderVO> listByQuery(OrderDTO orderDTO) {
-        OrderQuery orderQuery = OrderQuery.build(orderDTO);
+    public List<OrderVO> listByQuery(OrderListDTO orderListDTO) {
+        OrderQuery orderQuery = OrderQuery.build(orderListDTO);
         return baseMapper.selectByQuery(orderQuery).stream().map(this::toOrderVO).collect(Collectors.toList());
     }
 
     @Override
-    public PageResult<OrderVO> pageByQuery(OrderDTO orderDTO) {
-        OrderQuery orderQuery = OrderQuery.build(orderDTO);
-        SearchPage searchPage = orderDTO.getSearchPage();
+    public PageResult<OrderVO> pageByQuery(OrderListDTO orderListDTO) {
+        OrderQuery orderQuery = OrderQuery.build(orderListDTO);
+        SearchPage searchPage = orderListDTO.getSearchPage();
         // query with pagination
         Page<Order> page = new Page<>(searchPage.getPage(), searchPage.getPageSize());
         PageResult<Order> pageResult = PaginationUtil.buildPageResult(baseMapper.selectByPageAndQuery(page, orderQuery), searchPage);
         return PaginationUtil.changePageResult(pageResult, this::toOrderVO);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void createOrder(OrderDTO orderDTO) {
+        // create the order first
+        Order order = new Order();
+        order.setUid(UUID.randomUUID().toString());
+        order.setTotalCost(orderDTO.getTotalCost());
+        order.setStatus(CommonConstant.Order.STATUS_PENDING);
+        order.setRestaurantId(orderDTO.getRestaurantId());
+        order.setUserId(orderDTO.getUserId());
+        baseMapper.insert(order);
+        // bind the order item to order & save order items
+        List<OrderItem> orderItems = orderDTO.getItemList().stream().map(o -> new OrderItem(order.getId(), o.getItemName(), o.getQuantity(), o.getItemPrice())).collect(Collectors.toList());
+        orderItemDAO.batchInsert(orderItems);
     }
 }

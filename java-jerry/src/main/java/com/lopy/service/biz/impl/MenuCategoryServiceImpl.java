@@ -1,13 +1,8 @@
 package com.lopy.service.biz.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lopy.common.dto.menu.MenuCategoryDTO;
-import com.lopy.common.pagination.PageResult;
-import com.lopy.common.pagination.SearchPage;
+import com.lopy.common.dto.menu.MenuCategoryListDTO;
 import com.lopy.common.query.MenuCategoryQuery;
-import com.lopy.common.query.OrderItemQuery;
-import com.lopy.common.utils.PaginationUtil;
 import com.lopy.common.vo.restaurant.MenuCategoryVO;
 import com.lopy.dao.MenuCategoryDAO;
 import com.lopy.entity.MenuCategory;
@@ -32,8 +27,8 @@ public class MenuCategoryServiceImpl extends ServiceImpl<MenuCategoryDAO, MenuCa
     }
     
     @Override
-    public List<MenuCategoryVO> listByQuery(MenuCategoryDTO menuCategoryDTO) {
-        MenuCategoryQuery menuCategoryQuery = MenuCategoryQuery.build(menuCategoryDTO);
+    public List<MenuCategoryVO> listByQuery(MenuCategoryListDTO menuCategoryListDTO) {
+        MenuCategoryQuery menuCategoryQuery = MenuCategoryQuery.build(menuCategoryListDTO);
         return baseMapper.selectByQuery(menuCategoryQuery).stream().map(this::toMenuCategoryVO).collect(Collectors.toList());
     }
     

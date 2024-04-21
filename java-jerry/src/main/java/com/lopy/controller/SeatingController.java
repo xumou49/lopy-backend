@@ -1,7 +1,7 @@
 package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
-import com.lopy.common.dto.restaurant.SeatingDTO;
+import com.lopy.common.dto.restaurant.SeatingListDTO;
 import com.lopy.common.vo.RespVO;
 import com.lopy.entity.Seating;
 import com.lopy.service.biz.intf.SeatingService;
@@ -25,7 +25,7 @@ public class SeatingController {
     }
 
     @PutMapping("/save")
-    public RespVO<Void> save(@RequestBody SeatingDTO seatingDTO) {
+    public RespVO<Void> save(@RequestBody SeatingListDTO seatingDTO) {
         return RespVO.ok();
     }
 

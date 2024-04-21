@@ -3,6 +3,7 @@ package com.lopy.controller;
 import com.lopy.common.auth.AuthContext;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.order.OrderItemDTO;
+import com.lopy.common.dto.order.OrderItemListDTO;
 import com.lopy.common.pagination.PageResult;
 import com.lopy.common.vo.RespVO;
 import com.lopy.common.vo.order.OrderItemVO;
@@ -27,25 +28,25 @@ public class OrderItemController {
 
     /**
      * Returns page of associated order item for the given order.
-     * @param orderItemDTO: query params
+     * @param orderItemListDTO: query params
      * @return Order Item List in Pagination
      */
     @PostMapping("/page")
-    public RespVO<PageResult<OrderItemVO>> page(@RequestBody OrderItemDTO orderItemDTO) {
-        orderValidationService.orderOperateChecker(orderItemDTO.getOrderId(), AuthContext.getUserId());
-        PageResult<OrderItemVO> page = orderItemService.pageByQuery(orderItemDTO);
+    public RespVO<PageResult<OrderItemVO>> page(@RequestBody OrderItemListDTO orderItemListDTO) {
+        orderValidationService.orderOperateChecker(orderItemListDTO.getOrderId(), AuthContext.getUserId());
+        PageResult<OrderItemVO> page = orderItemService.pageByQuery(orderItemListDTO);
         return RespVO.ok(page);
     }
 
     /**
      * Returns list of associated order item for the given order.
-     * @param orderItemDTO: query params
+     * @param orderItemListDTO: query params
      * @return Order Item List
      */
     @PostMapping("/list")
-    public RespVO<List<OrderItemVO>> list(@RequestBody OrderItemDTO orderItemDTO){
-        orderValidationService.orderOperateChecker(orderItemDTO.getOrderId(), AuthContext.getUserId());
-        List<OrderItemVO> list = orderItemService.listByQuery(orderItemDTO);
+    public RespVO<List<OrderItemVO>> list(@RequestBody OrderItemListDTO orderItemListDTO){
+        orderValidationService.orderOperateChecker(orderItemListDTO.getOrderId(), AuthContext.getUserId());
+        List<OrderItemVO> list = orderItemService.listByQuery(orderItemListDTO);
         return RespVO.ok(list);
     }
 

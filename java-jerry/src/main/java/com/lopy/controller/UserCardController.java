@@ -2,7 +2,7 @@ package com.lopy.controller;
 
 import com.lopy.common.auth.AuthContext;
 import com.lopy.common.constant.CommonConstant;
-import com.lopy.common.dto.card.UserCardDTO;
+import com.lopy.common.dto.card.UserCardListDTO;
 import com.lopy.common.form.card.UserCardForm;
 import com.lopy.common.vo.RespVO;
 import com.lopy.common.vo.card.UserCardVO;
@@ -23,13 +23,13 @@ public class UserCardController {
 
     /**
      * Returns list of associated card for the current user
-     * @param userCardDTO: query params
+     * @param userCardListDTO: query params
      * @return User Card List
      */
     @PostMapping("/list")
-    public RespVO<List<UserCardVO>> list(@RequestBody UserCardDTO userCardDTO) {
-        userCardDTO.setUserId(AuthContext.getUserId());
-        List<UserCardVO> list = userCardService.listByQuery(userCardDTO);
+    public RespVO<List<UserCardVO>> list(@RequestBody UserCardListDTO userCardListDTO) {
+        userCardListDTO.setUserId(AuthContext.getUserId());
+        List<UserCardVO> list = userCardService.listByQuery(userCardListDTO);
         return RespVO.ok(list);
     }
 

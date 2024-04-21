@@ -1,7 +1,7 @@
 package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
-import com.lopy.common.dto.cuisine.CuisineDTO;
+import com.lopy.common.dto.cuisine.CuisineListDTO;
 import com.lopy.common.vo.RespVO;
 import com.lopy.common.vo.cuisine.CuisineVO;
 import com.lopy.service.biz.intf.CuisineService;
@@ -23,8 +23,8 @@ public class CuisineController {
     private CuisineService cuisineServiceImpl;
 
     @PostMapping("/list")
-    public RespVO<List<CuisineVO>> list(@RequestBody CuisineDTO cuisineDTO) {
-        List<CuisineVO> list = cuisineServiceImpl.listByQuery(cuisineDTO);
+    public RespVO<List<CuisineVO>> list(@RequestBody CuisineListDTO cuisineListDTO) {
+        List<CuisineVO> list = cuisineServiceImpl.listByQuery(cuisineListDTO);
         return RespVO.ok(list);
     }
 }

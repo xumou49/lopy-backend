@@ -10,6 +10,13 @@
         </if>
     </sql>
 
+    <insert id="batchInsert">
+        insert into c_order_item (`order_id`, `item_name`, `quantity`, `item_price`, `create_date`) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.orderId}, #{item.itemName}, #{item.quantity}, #{item.itemPrice}, now())
+        </foreach>
+    </insert>
+
     <select id="selectByPageAndQuery" resultType="com.lopy.entity.OrderItem">
         select *
         from c_order_item oi

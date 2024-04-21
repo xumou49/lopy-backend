@@ -4,7 +4,7 @@ import com.lopy.common.pagination.SearchPage;
 import lombok.Data;
 
 @Data
-public class RestaurantDTO {
+public class RestaurantListDTO {
 
     private SearchPage searchPage = new SearchPage();
     private Boolean promotionSearch = false;

@@ -47,4 +47,13 @@ public class CommonConstant {
         public static final int DEVICE_ANDROID = 2;
     }
 
+    public static final class Order {
+        private Order() {}
+
+        public static final int STATUS_PENDING = 0;
+        public static final int STATUS_PREPARING = 1;
+        public static final int STATUS_COMPLETED = 2;
+        public static final int STATUS_VOID = 3;
+    }
+
 }

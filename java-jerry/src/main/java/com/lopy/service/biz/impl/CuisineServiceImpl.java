@@ -1,7 +1,7 @@
 package com.lopy.service.biz.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lopy.common.dto.cuisine.CuisineDTO;
+import com.lopy.common.dto.cuisine.CuisineListDTO;
 import com.lopy.common.vo.cuisine.CuisineVO;
 import com.lopy.dao.CuisineDAO;
 import com.lopy.entity.Cuisine;
@@ -28,7 +28,7 @@ public class CuisineServiceImpl extends ServiceImpl<CuisineDAO, Cuisine> impleme
     }
 
     @Override
-    public List<CuisineVO> listByQuery(CuisineDTO cuisineDTO) {
+    public List<CuisineVO> listByQuery(CuisineListDTO cuisineListDTO) {
         return list().stream().map(this::toCuisineVO).collect(Collectors.toList());
     }
 }

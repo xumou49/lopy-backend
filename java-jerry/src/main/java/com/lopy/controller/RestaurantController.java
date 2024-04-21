@@ -1,7 +1,7 @@
 package com.lopy.controller;
 
 import com.lopy.common.constant.CommonConstant;
-import com.lopy.common.dto.restaurant.RestaurantDTO;
+import com.lopy.common.dto.restaurant.RestaurantListDTO;
 import com.lopy.common.pagination.PageResult;
 import com.lopy.common.vo.RespVO;
 import com.lopy.common.vo.restaurant.RestaurantVO;
@@ -23,23 +23,23 @@ public class RestaurantController {
 
     /**
      * Returns page of available restaurants in the system.
-     * @param restaurantDTO: query params
+     * @param restaurantListDTO: query params
      * @return Restaurant List in Pagination
      */
     @PostMapping("/page")
-    public RespVO<PageResult<RestaurantVO>> page(@RequestBody RestaurantDTO restaurantDTO) {
-        PageResult<RestaurantVO> page = restaurantService.pageByQuery(restaurantDTO);
+    public RespVO<PageResult<RestaurantVO>> page(@RequestBody RestaurantListDTO restaurantListDTO) {
+        PageResult<RestaurantVO> page = restaurantService.pageByQuery(restaurantListDTO);
         return RespVO.ok(page);
     }
 
     /**
      * Returns list of available restaurants in the system
-     * @param restaurantDTO: query params
+     * @param restaurantListDTO: query params
      * @return Restaurant List
      */
     @PostMapping("/list")
-    public RespVO<List<RestaurantVO>> list(@RequestBody RestaurantDTO restaurantDTO) {
-        List<RestaurantVO> list = restaurantService.listByQuery(restaurantDTO);
+    public RespVO<List<RestaurantVO>> list(@RequestBody RestaurantListDTO restaurantListDTO) {
+        List<RestaurantVO> list = restaurantService.listByQuery(restaurantListDTO);
         return RespVO.ok(list);
     }
 
@@ -50,12 +50,12 @@ public class RestaurantController {
     }
 
     @PutMapping("/save")
-    public RespVO<Void> save(@RequestBody RestaurantDTO restaurantDTO){
+    public RespVO<Void> save(@RequestBody RestaurantListDTO restaurantListDTO){
         return RespVO.ok();
     }
 
     @PutMapping("/update")
-    public RespVO<Void> update(@RequestBody RestaurantDTO restaurantDTO){
+    public RespVO<Void> update(@RequestBody RestaurantListDTO restaurantListDTO){
         return RespVO.ok();
     }
 

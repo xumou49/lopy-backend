@@ -1,20 +1,24 @@
 package com.lopy.controller;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
+import com.lopy.common.vo.RespVO;
+import com.lopy.service.biz.intf.CustomerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@Tag(name = "Stripe API")
+@RequestMapping("/stripe")
+@RestController
 public class StripeController {
-//
-//    @Value("${app.stripe.STRIPE_PUBLIC_KEY}")
-//    private String stripePublicKey;
 
-//    @RequestMapping("/checkout")
-//    public String checkout(Model model) {
-//        model.addAttribute("amount", 50 * 100); // in cents
-//        model.addAttribute("stripePublicKey", stripePublicKey);
-//        model.addAttribute("currency", ChargeRequest.Currency.EUR);
-//        return "checkout";
-//    }
+    @Autowired
+    private CustomerService customerService;
+
+    @GetMapping("/sync/customer")
+    public RespVO<Void> syncCustomerData() {
+        customerService.syncStripeData();
+        return RespVO.ok();
+    }
 }

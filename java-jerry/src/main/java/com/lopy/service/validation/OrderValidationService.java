@@ -18,7 +18,7 @@ public class OrderValidationService {
     public void orderOperateChecker(Long orderId, Long userId) {
         Order order = orderDAO.selectById(orderId);
         if (order == null) {
-            throw new ValidationException(MessageUtil.getMessage("error.order.not-exist"));
+            throw new ValidationException(MessageUtil.getMessage("error.order.not-found"));
         }
         if (!Objects.equals(order.getUserId(), userId)) {
             throw new ValidationException(MessageUtil.getMessage("error.order.operate-deny"));

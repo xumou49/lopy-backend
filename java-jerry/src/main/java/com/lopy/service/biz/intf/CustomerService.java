@@ -1,9 +1,12 @@
 package com.lopy.service.biz.intf;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.lopy.entity.Customer;
+import com.lopy.entity.User;
 
 public interface CustomerService {
 
+    void create(User user);
+
+    void syncStripeData();
 }
+
 

@@ -9,6 +9,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("c_customer")
 public class Customer extends Base {
+	private String stripeId;
 	private Long userId;
-
 }

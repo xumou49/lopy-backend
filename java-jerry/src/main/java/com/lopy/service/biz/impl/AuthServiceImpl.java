@@ -13,6 +13,7 @@ import com.lopy.dao.UserDAO;
 import com.lopy.entity.User;
 import com.lopy.service.biz.intf.AppleService;
 import com.lopy.service.biz.intf.AuthService;
+import com.lopy.service.biz.intf.CustomerService;
 import com.lopy.service.google.GoogleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private GoogleService googleServiceImpl;
+
+    @Autowired
+    private CustomerService customerService;
 
     @Override
     public String phoneLogin(LoginDTO loginDTO) {
@@ -73,6 +77,7 @@ public class AuthServiceImpl implements AuthService {
             user.setDevice(AuthContext.getUserDevice());
             user.setLocale(AuthContext.getUserLocale().toString());
             userDAO.insert(user);
+            customerService.create(user);
         }
         return user;
     }

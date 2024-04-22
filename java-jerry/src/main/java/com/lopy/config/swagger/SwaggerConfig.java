@@ -59,6 +59,15 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi stripeGroup() {
+        return GroupedOpenApi.builder()
+                .group("Stripe API")
+                .addOpenApiCustomiser(this::addGlobalRequestHeaders)
+                .pathsToMatch("/api/v1/stripe/**")
+                .build();
+    }
+
     private void addGlobalRequestHeaders(OpenAPI api) {
         List<Parameter> headers = buildHeaderParams();
         api.getPaths().values().forEach(o -> o.readOperations().forEach(ops -> headers.forEach(ops::addParametersItem)));

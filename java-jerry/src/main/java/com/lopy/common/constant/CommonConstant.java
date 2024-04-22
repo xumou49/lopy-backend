@@ -26,6 +26,7 @@ public class CommonConstant {
         public static final int FORBIDDEN = 403;
         public static final int METHOD_NOT_SUPPORT = 405;
         public static final int INTERNAL_SERVER_ERROR = 500;
+        public static final int STRIPE_ERROR = 10000;
     }
 
     public static class Account {

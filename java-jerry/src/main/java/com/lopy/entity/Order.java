@@ -13,7 +13,7 @@ public class Order extends Base {
 	private Long restaurantId;
 	private Long userId;
 	private Integer status;
-	private Long stripeInvoiceId;
+	private Long paymentIntentId;
 	private Double totalCost;
 	private Double taxes;
 	private Double discounts;

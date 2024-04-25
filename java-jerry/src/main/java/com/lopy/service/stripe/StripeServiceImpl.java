@@ -1,33 +1,53 @@
 package com.lopy.service.stripe;
 
+import com.lopy.common.constant.CommonConstant;
+import com.lopy.common.constant.StripeConstant;
 import com.lopy.common.exception.ServiceException;
 import com.lopy.common.form.stripe.CustomerForm;
+import com.lopy.common.form.stripe.PaymentForm;
 import com.lopy.common.form.stripe.PaymentMethodForm;
+import com.lopy.common.utils.CollectionUtil;
+import com.lopy.common.utils.JsonUtil;
+import com.lopy.dao.OrderDAO;
+import com.lopy.dao.PaymentIntentDAO;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
+import com.stripe.model.Event;
+import com.stripe.model.PaymentIntent;
 import com.stripe.model.PaymentMethod;
 import com.stripe.param.CustomerCreateParams;
+import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.param.PaymentMethodAttachParams;
 import com.stripe.param.PaymentMethodCreateParams;
 import com.stripe.param.PaymentMethodDetachParams;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Slf4j
 @Service
 public class StripeServiceImpl implements StripeService {
 
     @Value("${stripe.secret_key}")
-    private String stripeSecretKey;
+    private String secretKey;
 
+    @Value("${stripe.webhook_secret}")
+    private String webhookSecret;
+
+    @Autowired
+    private PaymentIntentDAO paymentIntentDAO;
+
+    @Autowired
+    private OrderDAO orderDAO;
 
     @PostConstruct
     public void initStripe() {
-        Stripe.apiKey = stripeSecretKey;
+        Stripe.apiKey = secretKey;
     }
 
     public Customer createCustomer(CustomerForm customerForm) {
@@ -59,12 +79,31 @@ public class StripeServiceImpl implements StripeService {
             PaymentMethod paymentMethod = PaymentMethod.create(pmParams);
             PaymentMethodAttachParams pmaParams =
                     PaymentMethodAttachParams.builder()
-                            .setCustomer(paymentMethodForm.getCustomerStripeId())
+                            .setCustomer(paymentMethodForm.getCustomerId())
                             .build();
             return paymentMethod.attach(pmaParams);
         } catch (StripeException e) {
             log.error("createCustomer invokes exception, error:", e);
             throw new ServiceException("fail to create customer");
+        }
+    }
+
+    @Override
+    public PaymentIntent createPaymentIntent(PaymentForm paymentForm) {
+        PaymentIntentCreateParams.Builder paramsBuilder = new PaymentIntentCreateParams
+                .Builder()
+                .setCustomer(paymentForm.getCustomerId())
+                .setPaymentMethod(paymentForm.getPaymentMethodId())
+                .setCurrency(paymentForm.getCurrency())
+                .setAmount(paymentForm.getAmount());
+
+        PaymentIntentCreateParams createParams = paramsBuilder.build();
+
+        try {
+            return PaymentIntent.create(createParams);
+        } catch (Exception e) {
+            log.error("createPaymentIntent invokes exception, error:", e);
+            throw new ServiceException("fail to create payment intent");
         }
     }
 
@@ -78,5 +117,79 @@ public class StripeServiceImpl implements StripeService {
             log.error("deletePaymentMethod invokes exception, error:", e);
             throw new ServiceException("fail detach payment method");
         }
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        log.info("receive stripe webhook event: {}", event.getType());
+        switch (event.getType()) {
+            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_SUCCEEDED:
+                handlePaymentIntentSucceed(event.getObject());
+                break;
+            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_FAILED:
+                handlePaymentIntentFailed(event.getObject());
+                break;
+            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_CANCELED:
+            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_REQUIRED_ACTION:
+                handlePaymentIntent(event.getObject());
+                break;
+            default:
+                log.info("receive stripe webhook event without handler found, bypass");
+        }
+    }
+
+    private void handlePaymentIntentSucceed(String object) {
+        PaymentIntent paymentIntent = parsePaymentIntentObj(object);
+        com.lopy.entity.PaymentIntent paymentIntentEntity = getPaymentIntentEntityAndUpdateStatus(paymentIntent);
+        if (paymentIntentEntity == null) {
+            return;
+        }
+
+        // update the order status which associates with the payment intent
+        List<com.lopy.entity.Order> orders = orderDAO.selectByPaymentIntentIdAndStatus(paymentIntentEntity.getId(), CommonConstant.Order.STATUS_UNPAID);
+        orders.forEach(order -> {
+            // filter out the unpaid order & change its status to pending
+            order.setStatus(CommonConstant.Order.STATUS_PENDING);
+            orderDAO.updateById(order);
+        });
+    }
+
+    private void handlePaymentIntentFailed(String object) {
+        PaymentIntent paymentIntent = parsePaymentIntentObj(object);
+        com.lopy.entity.PaymentIntent paymentIntentEntity = getPaymentIntentEntityAndUpdateStatus(paymentIntent);
+        if (paymentIntentEntity == null) {
+            return;
+        }
+
+        // remove the order which associates with the payment intent
+        orderDAO.deleteByPaymentIntentIdAndStatus(paymentIntentEntity.getId(), CommonConstant.Order.STATUS_UNPAID);
+    }
+
+    private void handlePaymentIntent(String object) {
+        // common handler for all payment intent events, simply update the status of db entity
+        PaymentIntent paymentIntent = parsePaymentIntentObj(object);
+        getPaymentIntentEntityAndUpdateStatus(paymentIntent);
+    }
+
+    private com.lopy.entity.PaymentIntent getPaymentIntentEntityAndUpdateStatus(PaymentIntent paymentIntent) {
+        // find the payment intent entity by stripe id & update its status
+        List<com.lopy.entity.PaymentIntent> paymentIntents = paymentIntentDAO.selectByStripeId(paymentIntent.getId());
+        if (CollectionUtil.isEmpty(paymentIntents)) {
+            log.error("handlePaymentIntentSucceed, payment intent not found, id: {}", paymentIntent.getId());
+            return null;
+        }
+        com.lopy.entity.PaymentIntent paymentIntentEntity = paymentIntents.get(0);
+        paymentIntentEntity.setStatus(paymentIntent.getStatus());
+        paymentIntentDAO.updateById(paymentIntentEntity);
+        return paymentIntentEntity;
+    }
+
+    private PaymentIntent parsePaymentIntentObj(String object) {
+        return JsonUtil.fromJson(object, PaymentIntent.class);
+    }
+
+    @Override
+    public String getWebhookSecret() {
+        return this.webhookSecret;
     }
 }

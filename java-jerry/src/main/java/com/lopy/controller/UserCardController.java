@@ -3,7 +3,7 @@ package com.lopy.controller;
 import com.lopy.common.auth.AuthContext;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.card.UserCardListDTO;
-import com.lopy.common.form.card.UserCardForm;
+import com.lopy.common.form.card.UserCardDTO;
 import com.lopy.common.vo.RespVO;
 import com.lopy.common.vo.card.UserCardVO;
 import com.lopy.service.biz.intf.UserCardService;
@@ -35,12 +35,12 @@ public class UserCardController {
 
     /**
      * Create a user card and bind to the current user
-     * @param userCardForm: form for creation of card
+     * @param userCardDTO: form for creation of card
      * @return Void
      */
     @PutMapping("/save")
-    public RespVO<Void> save(@RequestBody UserCardForm userCardForm) {
-        userCardService.save(userCardForm);
+    public RespVO<Void> save(@RequestBody UserCardDTO userCardDTO) {
+        userCardService.save(userCardDTO);
         return RespVO.ok();
     }
 

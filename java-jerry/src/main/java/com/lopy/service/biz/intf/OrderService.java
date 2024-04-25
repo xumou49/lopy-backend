@@ -3,6 +3,7 @@ package com.lopy.service.biz.intf;
 import com.lopy.common.dto.order.OrderDTO;
 import com.lopy.common.dto.order.OrderListDTO;
 import com.lopy.common.pagination.PageResult;
+import com.lopy.common.vo.order.OrderPaymentVO;
 import com.lopy.common.vo.order.OrderVO;
 
 import java.util.List;
@@ -12,6 +13,6 @@ public interface OrderService {
 
     PageResult<OrderVO> pageByQuery(OrderListDTO orderListDTO);
 
-    void createOrder(OrderDTO orderDTO);
+    OrderPaymentVO createOrder(OrderDTO orderDTO);
 }
 

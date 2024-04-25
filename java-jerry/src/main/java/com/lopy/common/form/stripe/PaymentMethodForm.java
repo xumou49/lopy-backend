@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class PaymentMethodForm {
 
-    private String customerStripeId;
+    private String customerId;
     private String token;
     private PaymentMethodCreateParams.Type type;
 }

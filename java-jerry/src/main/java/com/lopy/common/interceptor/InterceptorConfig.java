@@ -27,6 +27,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/**")
+                // webhook api
+                .excludePathPatterns("/api/v1/webhook/**")
                 // auth api
                 .excludePathPatterns("/api/v1/auth/**", "/api/v1/demo/**")
                 // restaurant api

@@ -6,6 +6,7 @@ import com.lopy.common.dto.order.OrderDTO;
 import com.lopy.common.dto.order.OrderListDTO;
 import com.lopy.common.pagination.PageResult;
 import com.lopy.common.vo.RespVO;
+import com.lopy.common.vo.order.OrderPaymentVO;
 import com.lopy.common.vo.order.OrderVO;
 import com.lopy.service.biz.intf.OrderService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,15 +48,15 @@ public class OrderController {
     }
 
     /**
-     * Returns list of current order & history order of current user.
-     * @param orderDTO: query params
+     * Place the order and initialize the payment
+     * @param orderDTO: params to create order
      * @return Order List
      */
     @PutMapping("/save")
-    public RespVO<Void> save(@RequestBody OrderDTO orderDTO) {
+    public RespVO<OrderPaymentVO> save(@RequestBody OrderDTO orderDTO) {
         orderDTO.setUserId(AuthContext.getUserId());
-        ordersService.createOrder(orderDTO);
-        return RespVO.ok();
+        OrderPaymentVO vo = ordersService.createOrder(orderDTO);
+        return RespVO.ok(vo);
     }
 
     @PutMapping("/update")

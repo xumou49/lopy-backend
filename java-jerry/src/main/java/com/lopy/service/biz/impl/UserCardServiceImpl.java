@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lopy.common.auth.AuthContext;
 import com.lopy.common.dto.card.UserCardListDTO;
 import com.lopy.common.exception.StripeException;
-import com.lopy.common.form.card.UserCardForm;
+import com.lopy.common.form.card.UserCardDTO;
 import com.lopy.common.form.stripe.PaymentMethodForm;
 import com.lopy.common.query.UserCardQuery;
 import com.lopy.common.utils.MessageUtil;
@@ -53,15 +53,15 @@ public class UserCardServiceImpl extends ServiceImpl<UserCardDAO, UserCard> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(UserCardForm userCardForm) {
+    public void save(UserCardDTO userCardDTO) {
         // get customer
-        Customer customer = customerValidation.customerExistChecker(userCardForm.getUserId());
+        Customer customer = customerValidation.customerExistChecker(userCardDTO.getUserId());
 
         // create stripe payment method
         PaymentMethodForm paymentMethodForm = new PaymentMethodForm();
         paymentMethodForm.setType(PaymentMethodCreateParams.Type.CARD);
-        paymentMethodForm.setToken(userCardForm.getToken());
-        paymentMethodForm.setCustomerStripeId(customer.getStripeId());
+        paymentMethodForm.setToken(userCardDTO.getToken());
+        paymentMethodForm.setCustomerId(customer.getStripeId());
         PaymentMethod paymentMethod = stripeService.createPaymentMethod(paymentMethodForm);
         PaymentMethod.Card card = paymentMethod.getCard();
         if (card == null) {
@@ -72,7 +72,7 @@ public class UserCardServiceImpl extends ServiceImpl<UserCardDAO, UserCard> impl
         UserCard userCard = new UserCard();
         userCard.setStripeId(paymentMethod.getId());
         userCard.setBrand(card.getBrand());
-        userCard.setUserId(userCardForm.getUserId());
+        userCard.setUserId(userCardDTO.getUserId());
         userCard.setFunding(card.getFunding());
         userCard.setLastFour(card.getLast4());
         userCard.setExpMonth(card.getExpMonth());
@@ -80,7 +80,7 @@ public class UserCardServiceImpl extends ServiceImpl<UserCardDAO, UserCard> impl
         userCard.setCountry(card.getCountry());
         userCard.setCvcCheck(card.getChecks().getCvcCheck());
         userCard.setFingerPrint(card.getFingerprint());
-        userCard.setUserId(userCardForm.getUserId());
+        userCard.setUserId(userCardDTO.getUserId());
         baseMapper.insert(userCard);
     }
 

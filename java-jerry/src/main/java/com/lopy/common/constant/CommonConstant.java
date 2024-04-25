@@ -27,6 +27,7 @@ public class CommonConstant {
         public static final int METHOD_NOT_SUPPORT = 405;
         public static final int INTERNAL_SERVER_ERROR = 500;
         public static final int STRIPE_ERROR = 10000;
+        public static final int PAYMENT_METHOD_ERROR = 20000;
     }
 
     public static class Account {
@@ -51,6 +52,7 @@ public class CommonConstant {
     public static final class Order {
         private Order() {}
 
+        public static final int STATUS_UNPAID = -1;
         public static final int STATUS_PENDING = 0;
         public static final int STATUS_PREPARING = 1;
         public static final int STATUS_COMPLETED = 2;

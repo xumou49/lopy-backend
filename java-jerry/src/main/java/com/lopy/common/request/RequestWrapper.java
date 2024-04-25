@@ -65,7 +65,11 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                sb.append(line);
+                sb.append(line).append(System.lineSeparator()); // Append the line separator after each line
+            }
+            // Remove the last line separator if the input stream didn't end with a newline character
+            if (sb.length() > 0 && sb.charAt(sb.length() - 1) == '\n') {
+                sb.setLength(sb.length() - 1);
             }
         } catch (IOException e) {
             log.error("", e);

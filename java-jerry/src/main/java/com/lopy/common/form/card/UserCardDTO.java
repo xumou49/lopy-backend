@@ -3,7 +3,7 @@ package com.lopy.common.form.card;
 import lombok.Data;
 
 @Data
-public class UserCardForm {
+public class UserCardDTO {
 
     private Long userId;
     private String token;

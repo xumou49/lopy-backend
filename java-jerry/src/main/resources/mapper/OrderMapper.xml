@@ -20,6 +20,7 @@
         <if test="query.endDate != null and query.endDate != ''">
             and o.modify_date &lt;= #{query.startDate}
         </if>
+        and o.status != -1
     </sql>
 
     <select id="selectByPageAndQuery" resultType="com.lopy.entity.Order">

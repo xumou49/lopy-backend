@@ -11,8 +11,4 @@ public class PaymentVO {
 
     private Long id;
     private String clientSecret;
-
-    public PaymentVO(String clientSecret) {
-        this.clientSecret = clientSecret;
-    }
 }

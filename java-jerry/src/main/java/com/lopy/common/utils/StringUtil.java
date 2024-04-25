@@ -1,5 +1,7 @@
 package com.lopy.common.utils;
 
+import com.google.gson.Gson;
+import com.stripe.model.PaymentIntent;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -88,11 +90,6 @@ public class StringUtil {
             str = "[" + str + "]";
         }
         return str;
-    }
-
-    public static void main(String[] args) {
-        List<String> strings = StringUtil.stringToList(StringUtil.trim("abc\r\n").replaceAll("[\\s|\\n|\\r|;|,]+", " "), " ");
-        log.info("{}", strings);
     }
 
     public static String joinBySquareBrackets(Set<String> list) {
@@ -247,4 +244,5 @@ public class StringUtil {
         }
         return builder.toString();
     }
+
 }

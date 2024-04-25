@@ -68,6 +68,15 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi webhookGroup() {
+        return GroupedOpenApi.builder()
+                .group("Webhook API")
+                .addOpenApiCustomiser(this::addGlobalRequestHeaders)
+                .pathsToMatch("/api/v1/webhook/**")
+                .build();
+    }
+
     private void addGlobalRequestHeaders(OpenAPI api) {
         List<Parameter> headers = buildHeaderParams();
         api.getPaths().values().forEach(o -> o.readOperations().forEach(ops -> headers.forEach(ops::addParametersItem)));

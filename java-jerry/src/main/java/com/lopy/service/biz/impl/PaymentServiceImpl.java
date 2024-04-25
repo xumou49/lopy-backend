@@ -16,6 +16,7 @@ import com.lopy.service.stripe.StripeService;
 import com.lopy.service.validation.CustomerValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class PaymentServiceImpl implements PaymentService {
     private PaymentIntentDAO paymentIntentDAO;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public PaymentVO create(PaymentDTO paymentDTO) {
         // get customer
         Customer customer = customerValidation.customerExistChecker(paymentDTO.getUserId());
@@ -48,7 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
         // request to stripe
         UserCard userCard = userCards.get(0);
         PaymentForm paymentForm = new PaymentForm();
-        paymentForm.setAmount((long) paymentDTO.getTotalCost() * 100);
+        paymentForm.setAmount((long) (paymentDTO.getTotalCost() * 100));
         paymentForm.setCustomerId(customer.getStripeId());
         paymentForm.setPaymentMethodId(userCard.getStripeId());
         com.stripe.model.PaymentIntent stripePaymentIntent = stripeService.createPaymentIntent(paymentForm);
@@ -58,10 +60,17 @@ public class PaymentServiceImpl implements PaymentService {
         paymentIntent.setAmount(stripePaymentIntent.getAmount());
         paymentIntent.setStripeId(stripePaymentIntent.getId());
         paymentIntent.setStatus(stripePaymentIntent.getStatus());
-        paymentIntent.setNextAction(stripePaymentIntent.getNextAction().getType());
+        paymentIntent.setNextAction(convertStripeNextActionData(stripePaymentIntent));
         paymentIntent.setUserId(paymentDTO.getUserId());
         paymentIntentDAO.insert(paymentIntent);
 
-        return new PaymentVO(stripePaymentIntent.getClientSecret());
+        return new PaymentVO(paymentIntent.getId(), stripePaymentIntent.getClientSecret());
+    }
+
+    private String convertStripeNextActionData(com.stripe.model.PaymentIntent paymentIntent) {
+        if (paymentIntent.getNextAction() == null) {
+            return "";
+        }
+        return paymentIntent.getNextAction().getType();
     }
 }

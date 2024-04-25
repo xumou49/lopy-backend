@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface UserCardDAO extends BaseMapper<UserCard> {
 
-    @Select("select * from t_user_card where primary_flag = #{primary_flag} and user_id = #{userId}")
+    @Select("select * from c_user_card where primary_flag = #{primary_flag} and user_id = #{userId}")
     List<UserCard> selectByUserIdAndPrimaryFlag(@Param("primary_flag") Integer primaryFlag, @Param("userId") Long userId);
 
     List<UserCard> selectByQuery(@Param("query") UserCardQuery userCardQuery);

@@ -16,6 +16,7 @@ import com.stripe.model.Customer;
 import com.stripe.model.Event;
 import com.stripe.model.PaymentIntent;
 import com.stripe.model.PaymentMethod;
+import com.stripe.model.StripeObject;
 import com.stripe.param.CustomerCreateParams;
 import com.stripe.param.PaymentIntentCreateParams;
 import com.stripe.param.PaymentMethodAttachParams;
@@ -122,24 +123,53 @@ public class StripeServiceImpl implements StripeService {
     @Override
     public void handleEvent(Event event) {
         log.info("receive stripe webhook event: {}", event.getType());
-        switch (event.getType()) {
-            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_SUCCEEDED:
-                handlePaymentIntentSucceed(event.getObject());
+        StripeConstant.EventCategoryEnum eventCategory = getEventCategory(event.getType());
+        switch (eventCategory) {
+            case PAYMENT_INTENT:
+                handlePaymentIntentEvent(event.getData(), event.getType());
                 break;
-            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_FAILED:
-                handlePaymentIntentFailed(event.getObject());
-                break;
-            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_CANCELED:
-            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_REQUIRED_ACTION:
-                handlePaymentIntent(event.getObject());
-                break;
-            default:
+            case UNDEFINED:
                 log.info("receive stripe webhook event without handler found, bypass");
         }
     }
 
-    private void handlePaymentIntentSucceed(String object) {
-        PaymentIntent paymentIntent = parsePaymentIntentObj(object);
+    private void handlePaymentIntentEvent(Event.Data data, String paymentIntentEventType) {
+        PaymentIntent paymentIntent = parseStripeObj(data, PaymentIntent.class);
+        if (paymentIntent == null) {
+            log.info("handlePaymentIntentEvent, fail to parse paymentIntentObj");
+            return;
+        }
+        switch (paymentIntentEventType) {
+            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_SUCCEEDED:
+                handlePaymentIntentSucceed(paymentIntent);
+                break;
+            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_FAILED:
+                handlePaymentIntentFailed(paymentIntent);
+                break;
+            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_CREATED:
+            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_REQUIRED_ACTION:
+            case StripeConstant.WebhookEvent.TYPE_PAYMENT_INTENT_CANCELED:
+                handlePaymentIntentMisc(paymentIntent);
+                break;
+            default:
+                log.info("receive stripe webhook payment-intent event without handler found, bypass");
+        }
+    }
+
+    public StripeConstant.EventCategoryEnum getEventCategory(String type) {
+        String[] split = type.split("\\.");
+        if (split.length == 0) {
+            return StripeConstant.EventCategoryEnum.UNDEFINED;
+        }
+        for (StripeConstant.EventCategoryEnum value : StripeConstant.EventCategoryEnum.values()) {
+            if (value.getValue().equals(split[0])) {
+                return value;
+            }
+        }
+        return StripeConstant.EventCategoryEnum.UNDEFINED;
+    }
+
+    private void handlePaymentIntentSucceed(PaymentIntent paymentIntent) {
         com.lopy.entity.PaymentIntent paymentIntentEntity = getPaymentIntentEntityAndUpdateStatus(paymentIntent);
         if (paymentIntentEntity == null) {
             return;
@@ -154,8 +184,7 @@ public class StripeServiceImpl implements StripeService {
         });
     }
 
-    private void handlePaymentIntentFailed(String object) {
-        PaymentIntent paymentIntent = parsePaymentIntentObj(object);
+    private void handlePaymentIntentFailed(PaymentIntent paymentIntent) {
         com.lopy.entity.PaymentIntent paymentIntentEntity = getPaymentIntentEntityAndUpdateStatus(paymentIntent);
         if (paymentIntentEntity == null) {
             return;
@@ -165,9 +194,8 @@ public class StripeServiceImpl implements StripeService {
         orderDAO.deleteByPaymentIntentIdAndStatus(paymentIntentEntity.getId(), CommonConstant.Order.STATUS_UNPAID);
     }
 
-    private void handlePaymentIntent(String object) {
+    private void handlePaymentIntentMisc(PaymentIntent paymentIntent) {
         // common handler for all payment intent events, simply update the status of db entity
-        PaymentIntent paymentIntent = parsePaymentIntentObj(object);
         getPaymentIntentEntityAndUpdateStatus(paymentIntent);
     }
 
@@ -184,8 +212,12 @@ public class StripeServiceImpl implements StripeService {
         return paymentIntentEntity;
     }
 
-    private PaymentIntent parsePaymentIntentObj(String object) {
-        return JsonUtil.fromJson(object, PaymentIntent.class);
+    private <T> T parseStripeObj(Event.Data data, Class<T> clazz) {
+        StripeObject object = data.getObject();
+        if (object == null) {
+            return null;
+        }
+        return JsonUtil.fromJson(object.toJson(), clazz);
     }
 
     @Override

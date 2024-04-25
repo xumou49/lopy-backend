@@ -3,10 +3,29 @@ package com.lopy.common.constant;
 public class StripeConstant {
     private StripeConstant() {}
 
+    public enum EventCategoryEnum {
+        PAYMENT_INTENT("payment_intent"),
+        PAYMENT_METHOD("payment_method"),
+        CUSTOMER("customer"),
+        UNDEFINED("undefined")
+        ;
+
+        private final String value;
+
+        EventCategoryEnum(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
+
     public static final String SIGNATURE_HEADER = "Stripe-Signature";
 
     public static final class WebhookEvent {
         private WebhookEvent() {}
+        public static final String TYPE_PAYMENT_INTENT_CREATED = "payment_intent.created";
         public static final String TYPE_PAYMENT_INTENT_CANCELED = "payment_intent.canceled";
         public static final String TYPE_PAYMENT_INTENT_FAILED = "payment_intent.payment_failed";
         public static final String TYPE_PAYMENT_INTENT_REQUIRED_ACTION = "payment_intent.requires_action";

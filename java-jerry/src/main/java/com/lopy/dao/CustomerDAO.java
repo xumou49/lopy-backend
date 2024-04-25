@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface CustomerDAO extends BaseMapper<Customer> {
 
-    @Select("select * from t_customer where user_id = #{userId}")
+    @Select("select * from c_customer where user_id = #{userId}")
     Customer selectByUserId(Long userId);
 }

@@ -19,6 +19,7 @@
         <where>
             <include refid="userCardQueryWhere"></include>
         </where>
+        order by uc.primary_flag desc, uc.create_date desc
     </select>
 
     <insert id="save">

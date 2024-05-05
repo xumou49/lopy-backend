@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -40,7 +41,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrderDAO, Order> implements O
     private OrderVO toOrderVO(Order order) {
         OrderVO orderVO = new OrderVO();
         BeanUtils.copyProperties(order, orderVO);
-        orderVO.setCompleteDate(order.getModifyDate());
+        orderVO.setCompleteDate(Objects.isNull(order.getModifyDate()) ? order.getCreateDate() : order.getModifyDate());
         return orderVO;
     }
 

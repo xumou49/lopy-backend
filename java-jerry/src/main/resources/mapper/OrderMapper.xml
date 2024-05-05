@@ -32,6 +32,7 @@
                 o.total_cost,
                 o.taxes,
                 o.discounts,
+                o.create_date,
                 o.modify_date
         from c_order o left join c_restaurant r
         on o.restaurant_id = r.id
@@ -49,6 +50,7 @@
                 o.total_cost,
                 o.taxes,
                 o.discounts,
+                o.create_date,
                 o.modify_date
         from c_order o left join c_restaurant r
         on o.restaurant_id = r.id

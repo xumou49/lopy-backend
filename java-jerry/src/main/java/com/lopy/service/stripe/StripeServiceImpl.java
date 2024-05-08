@@ -8,6 +8,7 @@ import com.lopy.common.form.stripe.PaymentForm;
 import com.lopy.common.form.stripe.PaymentMethodForm;
 import com.lopy.common.utils.CollectionUtil;
 import com.lopy.common.utils.JsonUtil;
+import com.lopy.common.vo.config.StripeVO;
 import com.lopy.dao.OrderDAO;
 import com.lopy.dao.PaymentIntentDAO;
 import com.stripe.Stripe;
@@ -33,6 +34,9 @@ import java.util.List;
 @Slf4j
 @Service
 public class StripeServiceImpl implements StripeService {
+
+    @Value("${stripe.public_key}")
+    private String publicKey;
 
     @Value("${stripe.secret_key}")
     private String secretKey;
@@ -63,6 +67,11 @@ public class StripeServiceImpl implements StripeService {
             log.error("createCustomer invokes exception, error:", e);
             throw new ServiceException("fail to create customer");
         }
+    }
+
+    @Override
+    public StripeVO getStripeConfig() {
+        return new StripeVO(publicKey);
     }
 
     public PaymentMethod createPaymentMethod(PaymentMethodForm paymentMethodForm) {

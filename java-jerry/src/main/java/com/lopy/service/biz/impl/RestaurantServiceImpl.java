@@ -79,9 +79,7 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
 
         // search restaurant with high highest rank (todo)
         SearchPage searchPage = restaurantListDTO.getSearchPage();
-        RestaurantQuery restaurantQuery = new RestaurantQuery();
-        restaurantQuery.setName(searchPage.getKeyword());
-        restaurantQuery.setCuisine(restaurantListDTO.getCuisine());
+        RestaurantQuery restaurantQuery = RestaurantQuery.build(restaurantListDTO);
         return baseMapper.selectByQuery(restaurantQuery).stream().map(this::toRestaurantVO).collect(Collectors.toList());
     }
 

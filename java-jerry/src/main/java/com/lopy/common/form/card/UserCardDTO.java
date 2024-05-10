@@ -6,5 +6,5 @@ import lombok.Data;
 public class UserCardDTO {
 
     private Long userId;
-    private String token;
+    private String cardToken;
 }

@@ -15,7 +15,7 @@ public class UserCard {
 
     @TableId(type = IdType.AUTO)
     private Long id;
-    private Integer primaryFlag;
+    private Integer primaryFlag = 0;
     private String stripeId;
     private String brand;
     private Long userId;
@@ -25,7 +25,7 @@ public class UserCard {
     private Long expYear;
     private String country;
     private String cvcCheck;
-    private String fingerPrint;
+    private String fingerprint;
     @TableField(fill = FieldFill.INSERT)
     private Date createDate;
 }

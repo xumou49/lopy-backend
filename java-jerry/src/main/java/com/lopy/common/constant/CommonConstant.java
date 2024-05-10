@@ -50,6 +50,8 @@ public class CommonConstant {
     }
 
     public static final class Order {
+        public static final double TAX_RATE = 0.09;
+
         private Order() {}
 
         public static final int STATUS_UNPAID = -1;

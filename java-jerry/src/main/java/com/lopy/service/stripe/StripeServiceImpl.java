@@ -18,11 +18,7 @@ import com.stripe.model.Event;
 import com.stripe.model.PaymentIntent;
 import com.stripe.model.PaymentMethod;
 import com.stripe.model.StripeObject;
-import com.stripe.param.CustomerCreateParams;
-import com.stripe.param.PaymentIntentCreateParams;
-import com.stripe.param.PaymentMethodAttachParams;
-import com.stripe.param.PaymentMethodCreateParams;
-import com.stripe.param.PaymentMethodDetachParams;
+import com.stripe.param.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -110,7 +106,15 @@ public class StripeServiceImpl implements StripeService {
         PaymentIntentCreateParams createParams = paramsBuilder.build();
 
         try {
-            return PaymentIntent.create(createParams);
+            PaymentIntentConfirmParams params =
+                    PaymentIntentConfirmParams.builder()
+                            .setPaymentMethod(paymentForm.getPaymentMethodId())
+                            .build();
+            PaymentIntent paymentIntent = PaymentIntent.create(createParams);
+            PaymentIntent confirmPaymentIntent = paymentIntent.confirm(params);
+            System.out.println("paymentIntent= " + paymentIntent.getId());
+            System.out.println("confirmPaymentIntent = " + confirmPaymentIntent.getId());
+            return confirmPaymentIntent;
         } catch (Exception e) {
             log.error("createPaymentIntent invokes exception, error:", e);
             throw new ServiceException("fail to create payment intent");

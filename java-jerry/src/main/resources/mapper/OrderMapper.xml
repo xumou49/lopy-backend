@@ -39,7 +39,7 @@
         <where>
             <include refid="orderQueryWhere"></include>
         </where>
-        order by o.create_date desc
+        order by o.id desc
     </select>
     
     <select id="selectByQuery" resultType="com.lopy.entity.Order">
@@ -58,6 +58,6 @@
         <where>
             <include refid="orderQueryWhere"></include>
         </where>
-        order by o.create_date desc
+        order by o.id desc
     </select>
 </mapper>

@@ -96,6 +96,9 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
     public RestaurantVO getById(Long id) {
         RestaurantVO restaurantVO = toRestaurantVO(baseMapper.selectById(id));
         List<MenuCategoryVO> menuCategoryList = baseMapper.selectCategoryByRestaurantId(id).stream().map(this::toMenuCategoryVO).collect(Collectors.toList());
+        if (CollectionUtil.isEmpty(menuCategoryList)) {
+            return restaurantVO;
+        }
 
         MenuCategoryVO mc = menuCategoryList.get(0);
         List<MenuVO> menuList = baseMapper.selectMenuByCategoryId(mc.getId()).stream().map(this::toMenuVO).collect(Collectors.toList());

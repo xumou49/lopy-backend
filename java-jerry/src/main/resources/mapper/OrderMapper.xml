@@ -9,6 +9,14 @@
             and r.name like concat('%', #{query.name}, '%')
         </if>
 
+        <if test="query.type == 1">
+            and o.status in (0, 1, 2)
+        </if>
+
+        <if test="query.type == 2">
+            and o.status in (3, 4)
+        </if>
+
         <if test="query.userId != null">
             and o.user_id = #{query.userId}
         </if>

@@ -66,6 +66,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrderDAO, Order> implements O
     public OrderPaymentVO createOrder(OrderDTO orderDTO) {
         // conduct the payment first
         PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setCardId(orderDTO.getCardId());
         paymentDTO.setUserId(orderDTO.getUserId());
         paymentDTO.setItemList(orderDTO.getItemList());
         PaymentVO paymentVO = paymentService.create(paymentDTO);

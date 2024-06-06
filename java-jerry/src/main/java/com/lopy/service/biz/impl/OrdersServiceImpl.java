@@ -79,7 +79,6 @@ public class OrdersServiceImpl extends ServiceImpl<OrderDAO, Order> implements O
         order.setTotalCost(orderDTO.getTotalCost());
         order.setStatus(CommonConstant.Order.STATUS_UNPAID);
         order.setTaxes(orderDTO.getTotalCost() * CommonConstant.Order.TAX_RATE);
-        order.setRestaurantId(orderDTO.getRestaurantId());
         order.setUserId(orderDTO.getUserId());
         baseMapper.insert(order);
 

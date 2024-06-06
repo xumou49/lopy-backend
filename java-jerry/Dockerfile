@@ -10,4 +10,4 @@ VOLUME /usr/logs
 EXPOSE 8080
 
 # start app
-ENTRYPOINT ["java", "-Dtrillio.config.env=stg", "-Xms512m", "-Xmx512m", "-jar", "lopy-0.0.1.jar"]
+ENTRYPOINT ["java", "-Dlopy.config.env=stg", "-Xms512m", "-Xmx512m", "-jar", "lopy-0.0.1.jar"]

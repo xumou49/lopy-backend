@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@ConfigurationProperties(prefix = "lopy.common")
+@ConfigurationProperties(prefix = "lopy.config")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
 public class LopyProps {
-    private String appId;
-    private String secretKey;
-    private boolean auth;
+    private String env;
+    private String domain;
 }

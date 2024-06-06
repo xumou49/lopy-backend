@@ -1,6 +1,7 @@
 package com.lopy.config.swagger;
 
 import com.lopy.common.constant.AuthConstant;
+import com.lopy.common.utils.StringUtil;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -8,15 +9,22 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.media.StringSchema;
 import io.swagger.v3.oas.models.parameters.HeaderParameter;
 import io.swagger.v3.oas.models.parameters.Parameter;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 
 @Configuration
 public class SwaggerConfig {
+
+    @Resource
+    private Environment environment;
 
     @Bean
     public GroupedOpenApi accountGroup() {
@@ -97,8 +105,21 @@ public class SwaggerConfig {
                         .description("backend service")
                         .version("1.0.0")
                         .license(new License().name("license name here").url("http://lopy.com")))
+                .addServersItem(buildServer())
                 .externalDocs(new ExternalDocumentation()
                         .description("description of external docs")
                         .url("url of external docs"));
+    }
+
+    private Server buildServer() {
+        // if env is empty or dev, use localhost
+        String env = StringUtil.trim(environment.getProperty("lopy.config.env"));
+        if (StringUtil.isEmpty(env) || Objects.equals("dev", env)) {
+            return new Server().url(String.format("http://localhost:%s", environment.getProperty("server.port")));
+        }
+        // else, use of the domain with https
+        String domain = StringUtil.trim(environment.getProperty("lopy.config.domain"));
+        String url = String.format("https://%s", domain);
+        return new Server().url(url);
     }
 }

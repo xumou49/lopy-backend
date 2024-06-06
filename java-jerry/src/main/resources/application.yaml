@@ -47,6 +47,11 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
+lopy:
+  config:
+    env: dev
+    domain: "api-lopy.wanioco.com"
+
 apple:
   issuer:
     id: "https://appleid.apple.com"

@@ -73,6 +73,7 @@ public class OrdersServiceImpl extends ServiceImpl<OrderDAO, Order> implements O
 
         // create the order
         Order order = new Order();
+        order.setRestaurantId(orderDTO.getRestaurantId());
         order.setUid(UUID.randomUUID().toString());
         order.setPaymentIntentId(paymentVO.getId());
         order.setTotalCost(orderDTO.getTotalCost());

@@ -15,6 +15,7 @@ public class PaymentDTO {
 
     private Long userId;
     private List<OrderItemDTO> itemList = new ArrayList<>();
+    private Long cardId;
 
     public double getTotalCost() {
         return itemList.stream().mapToDouble(o -> o.getPrice() * o.getQuantity()).sum();

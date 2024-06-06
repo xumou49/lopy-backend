@@ -10,6 +10,7 @@ public class OrderQuery {
     private String startDate;
     private String endDate;
     private Long userId;
+    private Integer type;
 
     public static OrderQuery build(OrderListDTO orderListDTO) {
         OrderQuery orderQuery = new OrderQuery();
@@ -17,6 +18,7 @@ public class OrderQuery {
         orderQuery.setEndDate(orderListDTO.getEndDate());
         orderQuery.setRestaurantName(orderListDTO.getSearchPage().getKeyword());
         orderQuery.setUserId(orderListDTO.getUserId());
+        orderQuery.setType(orderListDTO.getType());
         return orderQuery;
     }
 }

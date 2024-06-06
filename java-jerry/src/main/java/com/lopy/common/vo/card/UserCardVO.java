@@ -12,4 +12,5 @@ public class UserCardVO {
     private Long expMonth;
     private Long expYear;
     private String country;
+    private Integer primaryFlag;
 }

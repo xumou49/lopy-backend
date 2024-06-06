@@ -4,6 +4,7 @@ import com.lopy.common.dto.payment.PaymentDTO;
 import com.lopy.common.exception.ServiceException;
 import com.lopy.common.form.stripe.PaymentForm;
 import com.lopy.common.utils.CollectionUtil;
+import com.lopy.common.utils.DataUtil;
 import com.lopy.common.utils.MessageUtil;
 import com.lopy.common.vo.payment.PaymentVO;
 import com.lopy.dao.PaymentIntentDAO;
@@ -41,14 +42,22 @@ public class PaymentServiceImpl implements PaymentService {
         // get customer
         Customer customer = customerValidation.customerExistChecker(paymentDTO.getUserId());
 
-        // get primary method
-        List<UserCard> userCards = userCardDAO.selectByUserIdAndPrimaryFlag(1, paymentDTO.getUserId());
-        if (CollectionUtil.isEmpty(userCards)) {
-            throw new ServiceException(MessageUtil.getMessage("error.payment-method.not-found"));
+        UserCard userCard;
+        // get payment method
+        if (DataUtil.toLong(paymentDTO.getCardId()) > 0) {
+            userCard = userCardDAO.selectByIdAndUserId(paymentDTO.getCardId(), paymentDTO.getUserId());
+            if (userCard == null) {
+                throw new ServiceException(MessageUtil.getMessage("error.payment-method.not-found"));
+            }
+        } else {
+            List<UserCard> userCards = userCardDAO.selectByUserIdAndPrimaryFlag(1, paymentDTO.getUserId());
+            if (CollectionUtil.isEmpty(userCards)) {
+                throw new ServiceException(MessageUtil.getMessage("error.payment-method.not-found"));
+            }
+            userCard = userCards.get(0);
         }
 
         // request to stripe
-        UserCard userCard = userCards.get(0);
         PaymentForm paymentForm = new PaymentForm();
         paymentForm.setAmount((long) (paymentDTO.getTotalCost() * 100));
         paymentForm.setCustomerId(customer.getStripeId());

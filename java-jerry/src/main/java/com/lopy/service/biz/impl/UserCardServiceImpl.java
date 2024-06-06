@@ -54,13 +54,14 @@ public class UserCardServiceImpl extends ServiceImpl<UserCardDAO, UserCard> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(UserCardDTO userCardDTO) {
+        System.out.println("token from request: " + userCardDTO.getCardToken());
         // get customer
         Customer customer = customerValidation.customerExistChecker(userCardDTO.getUserId());
 
         // create stripe payment method
         PaymentMethodForm paymentMethodForm = new PaymentMethodForm();
         paymentMethodForm.setType(PaymentMethodCreateParams.Type.CARD);
-        paymentMethodForm.setToken(userCardDTO.getToken());
+        paymentMethodForm.setToken(userCardDTO.getCardToken());
         paymentMethodForm.setCustomerId(customer.getStripeId());
         PaymentMethod paymentMethod = stripeService.createPaymentMethod(paymentMethodForm);
         PaymentMethod.Card card = paymentMethod.getCard();
@@ -79,7 +80,7 @@ public class UserCardServiceImpl extends ServiceImpl<UserCardDAO, UserCard> impl
         userCard.setExpYear(card.getExpYear());
         userCard.setCountry(card.getCountry());
         userCard.setCvcCheck(card.getChecks().getCvcCheck());
-        userCard.setFingerPrint(card.getFingerprint());
+        userCard.setFingerprint(card.getFingerprint());
         userCard.setUserId(userCardDTO.getUserId());
         baseMapper.insert(userCard);
     }

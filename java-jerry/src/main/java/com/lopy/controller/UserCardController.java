@@ -40,6 +40,7 @@ public class UserCardController {
      */
     @PutMapping("/save")
     public RespVO<Void> save(@RequestBody UserCardDTO userCardDTO) {
+        userCardDTO.setUserId(AuthContext.getUserId());
         userCardService.save(userCardDTO);
         return RespVO.ok();
     }

@@ -11,7 +11,7 @@ public class RestaurantQuery {
 
     public static RestaurantQuery build(RestaurantListDTO restaurantListDTO) {
         RestaurantQuery restaurantQuery = new RestaurantQuery();
-        restaurantQuery.setName(restaurantListDTO.getSearchPage().getKeyword());
+        restaurantQuery.setName(restaurantListDTO.getName());
         restaurantQuery.setCuisine(restaurantListDTO.getCuisine());
         return restaurantQuery;
     }

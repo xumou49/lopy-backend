@@ -65,4 +65,6 @@ google:
 stripe:
   public_key: 'pk_test_51NS9mDHUWFw9hO0YN2oHcel6PU8QoUVKpFOOHT0iW0ByfgSPvKRdORJ03dL6J3flMbmU9kkZhBGiDbzDSsniJGnt00hxHoaShi'
   secret_key: 'sk_test_51NS9mDHUWFw9hO0YbLqzUgfUjNaVRMPhOw0N4pJcLWI84EAzQaJMmzzoQgjlpmyIyUxSormkRPVJYQ41060jhDOW00JMnvHBWE'
-  webhook_secret: 'whsec_53c3fb80631a396984cb99f670d78d2b2336d61be693bce2c5a2e30f57f95dfe'
+#  webhook_secret: 'whsec_53c3fb80631a396984cb99f670d78d2b2336d61be693bce2c5a2e30f57f95dfe'
+  webhook_secret: 'whsec_TIlxYSl0I5BjzhgMV7hX8seyepWa7ufQ'
+

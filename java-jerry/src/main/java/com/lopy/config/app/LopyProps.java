@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @Component
 public class LopyProps {
+    private String appId;
     private String env;
     private String domain;
 }

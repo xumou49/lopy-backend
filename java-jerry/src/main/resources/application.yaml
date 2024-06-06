@@ -49,6 +49,7 @@ mybatis-plus:
 
 lopy:
   config:
+    app-id: ""
     env: dev
     domain: "api-lopy.wanioco.com"
 

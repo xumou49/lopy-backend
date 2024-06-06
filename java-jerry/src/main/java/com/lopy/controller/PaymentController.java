@@ -1,5 +1,6 @@
 package com.lopy.controller;
 
+import com.lopy.common.auth.AuthContext;
 import com.lopy.common.constant.CommonConstant;
 import com.lopy.common.dto.payment.PaymentDTO;
 import com.lopy.common.vo.RespVO;
@@ -27,6 +28,7 @@ public class PaymentController {
      */
     @PostMapping("/create")
     public RespVO<PaymentVO> create(@RequestBody PaymentDTO paymentDTO) {
+        paymentDTO.setUserId(AuthContext.getUserId());
         PaymentVO paymentVO = paymentService.create(paymentDTO);
         return RespVO.ok(paymentVO);
     }

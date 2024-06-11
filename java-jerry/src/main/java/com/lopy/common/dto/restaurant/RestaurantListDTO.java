@@ -3,6 +3,8 @@ package com.lopy.common.dto.restaurant;
 import com.lopy.common.pagination.SearchPage;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RestaurantListDTO {
 
@@ -10,4 +12,5 @@ public class RestaurantListDTO {
     private Boolean promotionSearch = false;
     private String cuisine;
     private String name;
+    private List<String> idList;
 }

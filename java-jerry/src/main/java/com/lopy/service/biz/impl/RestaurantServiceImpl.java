@@ -10,6 +10,7 @@ import com.lopy.common.query.RestaurantQuery;
 import com.lopy.common.utils.CollectionUtil;
 import com.lopy.common.utils.DateUtil;
 import com.lopy.common.utils.PaginationUtil;
+import com.lopy.common.utils.StringUtil;
 import com.lopy.common.vo.restaurant.MenuCategoryVO;
 import com.lopy.common.vo.restaurant.MenuItemVO;
 import com.lopy.common.vo.restaurant.MenuVO;
@@ -20,6 +21,7 @@ import com.lopy.entity.Menu;
 import com.lopy.entity.MenuCategory;
 import com.lopy.entity.MenuItem;
 import com.lopy.entity.Restaurant;
+import com.lopy.service.biz.intf.HistoryKeywordService;
 import com.lopy.service.biz.intf.RestaurantService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
 
     @Autowired
     private MenuCategoryDAO menuCategoryDAO;
+
+    @Autowired
+    private HistoryKeywordService historyKeywordService;
 
     private RestaurantVO toRestaurantVO(Restaurant restaurant) {
         RestaurantVO restaurantVO = new RestaurantVO();
@@ -80,7 +85,12 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
         // search restaurant with high highest rank (todo)
         SearchPage searchPage = restaurantListDTO.getSearchPage();
         RestaurantQuery restaurantQuery = RestaurantQuery.build(restaurantListDTO);
-        return baseMapper.selectByQuery(restaurantQuery).stream().map(this::toRestaurantVO).collect(Collectors.toList());
+        List<RestaurantVO> list = baseMapper.selectByQuery(restaurantQuery).stream().map(this::toRestaurantVO).collect(Collectors.toList());
+        // insert search keyword into history if any name is present
+        if (StringUtil.isNotBlank(restaurantQuery.getName())) {
+            historyKeywordService.saveKeyword(restaurantQuery.getName());
+        }
+        return list;
     }
 
     public PageResult<RestaurantVO> pageByQuery(RestaurantListDTO restaurantListDTO) {

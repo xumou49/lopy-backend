@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface HistoryKeywordService {
 
-    void saveKeyword(Long userId, String keyword);
+    void saveKeyword(String keyword);
 
     List<String> latestKeywords(Long userId, Integer size);
 }

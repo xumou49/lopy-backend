@@ -18,6 +18,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Resource
     private LogInterceptor logInterceptor;
 
+    @Resource
+    private RestaurantApiInterceptor restaurantApiInterceptor;
+
+
+
     /**
      * @description Register custom interceptor
      * @author Dex
@@ -37,6 +42,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/favicon.ico")
                 // swagger api
                 .excludePathPatterns(getSwaggerUris());
+        registry.addInterceptor(restaurantApiInterceptor)
+                        .addPathPatterns("/api/v1/restaurant/**");
         registry.addInterceptor(logInterceptor)
                 .addPathPatterns("/**")
                 // favicon.ico

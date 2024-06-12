@@ -1,5 +1,7 @@
 package com.lopy.service.biz.impl;
 
+import com.lopy.common.auth.AuthContext;
+import com.lopy.common.utils.DataUtil;
 import com.lopy.common.utils.StringUtil;
 import com.lopy.dao.HistoryKeywordDAO;
 import com.lopy.entity.HistoryKeyword;
@@ -18,7 +20,12 @@ public class HistoryKeywordServiceImpl implements HistoryKeywordService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveKeyword(Long userId, String keyword) {
+    public void saveKeyword(String keyword) {
+        // no need to save keyword if user is not logged in
+        long userId = DataUtil.toLong(AuthContext.getUserId());
+        if (userId == 0) {
+            return;
+        }
         HistoryKeyword historyKeyword = new HistoryKeyword();
         historyKeyword.setUserId(userId);
         historyKeyword.setKeyword(StringUtil.trim(keyword));

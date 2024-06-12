@@ -10,6 +10,7 @@ import com.lopy.common.pagination.PageResult;
 import com.lopy.common.pagination.SearchPage;
 import com.lopy.common.query.OrderQuery;
 import com.lopy.common.utils.PaginationUtil;
+import com.lopy.common.utils.StringUtil;
 import com.lopy.common.vo.order.OrderPaymentVO;
 import com.lopy.common.vo.order.OrderVO;
 import com.lopy.common.vo.payment.PaymentVO;
@@ -38,6 +39,9 @@ public class OrdersServiceImpl extends ServiceImpl<OrderDAO, Order> implements O
     @Autowired
     private OrderItemDAO orderItemDAO;
 
+    // @Autowired
+    // private History
+
     private OrderVO toOrderVO(Order order) {
         OrderVO orderVO = new OrderVO();
         BeanUtils.copyProperties(order, orderVO);
@@ -48,7 +52,12 @@ public class OrdersServiceImpl extends ServiceImpl<OrderDAO, Order> implements O
     @Override
     public List<OrderVO> listByQuery(OrderListDTO orderListDTO) {
         OrderQuery orderQuery = OrderQuery.build(orderListDTO);
-        return baseMapper.selectByQuery(orderQuery).stream().map(this::toOrderVO).collect(Collectors.toList());
+        List<OrderVO> list = baseMapper.selectByQuery(orderQuery).stream().map(this::toOrderVO).collect(Collectors.toList());
+        // keyword is not empty, save as history data
+        if (!StringUtil.isEmpty(orderQuery.getRestaurantName())) {
+            // save history data
+        }
+        return list;
     }
 
     @Override

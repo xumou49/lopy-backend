@@ -12,5 +12,5 @@ public class RestaurantListDTO {
     private Boolean promotionSearch = false;
     private String cuisine;
     private String name;
-    private List<String> idList;
+    private List<Integer> idList;
 }

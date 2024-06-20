@@ -9,7 +9,7 @@ public class RestaurantQuery {
 
     private String name;
     private String cuisine;
-    private List<String> idList;
+    private List<Integer> idList;
 
     public static RestaurantQuery build(RestaurantListDTO restaurantListDTO) {
         RestaurantQuery restaurantQuery = new RestaurantQuery();

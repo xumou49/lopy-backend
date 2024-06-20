@@ -45,6 +45,13 @@
         <if test="query.cuisine != null and query.cuisine != ''">
             and labels like concat('%', #{query.cuisine}, '%')
         </if>
+
+        <if test="query.idList != null and query.idList.size() > 0">
+            and id in
+            <foreach collection="query.idList" item="restaurantId" open="(" close=")" separator=",">
+                #{restaurantId}
+            </foreach>
+        </if>
     </sql>
 
     <select id="selectByPageAndQuery" resultType="com.lopy.entity.Restaurant">

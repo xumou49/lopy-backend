@@ -6,6 +6,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Objects;
 
 public class WebUtil {
@@ -32,5 +33,19 @@ public class WebUtil {
         String body = requestBodyThreadLocal.get();
         requestBodyThreadLocal.remove();
         return body;
+    }
+
+    public static String getIpAddr(HttpServletRequest request) {
+        String ip = StringUtil.trim(request.getHeader("x-original-forwarded-for"));
+        if (StringUtil.isNotBlank(ip)) {
+            List<String> ipList = StringUtil.stringToList(ip, ",");
+            if (CollectionUtil.isNotEmpty(ipList)) return StringUtil.trim(ipList.get(0));
+        }
+        return request.getRemoteAddr();
+    }
+
+    public static String getUserAgent() {
+        HttpServletRequest request = getRequest();
+        return StringUtil.trim(request.getHeader("User-Agent"));
     }
 }

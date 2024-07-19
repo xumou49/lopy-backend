@@ -8,15 +8,13 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName("t_event_log")
-public class EventLog {
+@TableName("t_access_log")
+public class AccessLog {
 
     @TableId(type = IdType.AUTO)
     private Long id;
     private Long userId;
-    private String requestUrl;
-    private String requestArgs;
-    private String requestMethod;
-    private String requestBody;
-    private Date logTime;
+    private String userAgent;
+    private Date accessTime;
+    private String remoteIp;
 }

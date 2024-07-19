@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -40,8 +42,8 @@ public class DemoController {
     }
 
     @PutMapping("/create")
-    @Authorize(access = CommonConstant.Account.RESTAURATEUR)
-    public RespVO<Void> create() {
+    // @Authorize(access = CommonConstant.Account.RESTAURATEUR)
+    public RespVO<Void> create(@RequestBody String body, @RequestParam String id) {
         System.out.println("in role create");
         return RespVO.ok();
     }

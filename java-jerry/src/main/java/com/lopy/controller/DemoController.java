@@ -44,7 +44,7 @@ public class DemoController {
     @PutMapping("/create")
     // @Authorize(access = CommonConstant.Account.RESTAURATEUR)
     public RespVO<Void> create(@RequestBody String body, @RequestParam String id) {
-        System.out.println("in role create");
+        System.out.println("in role create1");
         return RespVO.ok();
     }
 

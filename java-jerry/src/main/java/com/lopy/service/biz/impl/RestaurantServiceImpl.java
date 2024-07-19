@@ -32,6 +32,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service("restaurantService")
@@ -74,9 +75,10 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
 
     @Override
     public List<RestaurantVO> listByQuery(RestaurantListDTO restaurantListDTO) {
-        if (CollectionUtil.isEmpty(restaurantListDTO.getIdList())) {
+        if (Objects.equals(restaurantListDTO.getAction(), "fav-list") && CollectionUtil.isEmpty(restaurantListDTO.getIdList())) {
             return Collections.emptyList();
         }
+        
         // if search for restaurant with promotion, find those which has promotion within today
         if (restaurantListDTO.getPromotionSearch()) {
             LocalDateTime now = LocalDateTime.now();

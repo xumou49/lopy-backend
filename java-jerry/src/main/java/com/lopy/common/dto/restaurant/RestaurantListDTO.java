@@ -13,4 +13,5 @@ public class RestaurantListDTO {
     private String cuisine;
     private String name;
     private List<Integer> idList;
+    private String action;
 }

@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,6 +74,9 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
 
     @Override
     public List<RestaurantVO> listByQuery(RestaurantListDTO restaurantListDTO) {
+        if (CollectionUtil.isEmpty(restaurantListDTO.getIdList())) {
+            return Collections.emptyList();
+        }
         // if search for restaurant with promotion, find those which has promotion within today
         if (restaurantListDTO.getPromotionSearch()) {
             LocalDateTime now = LocalDateTime.now();

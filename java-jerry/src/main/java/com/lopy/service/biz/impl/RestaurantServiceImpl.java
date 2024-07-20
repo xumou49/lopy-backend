@@ -78,7 +78,7 @@ public class RestaurantServiceImpl extends ServiceImpl<RestaurantDAO, Restaurant
         if (Objects.equals(restaurantListDTO.getAction(), "fav-list") && CollectionUtil.isEmpty(restaurantListDTO.getIdList())) {
             return Collections.emptyList();
         }
-        
+
         // if search for restaurant with promotion, find those which has promotion within today
         if (restaurantListDTO.getPromotionSearch()) {
             LocalDateTime now = LocalDateTime.now();
